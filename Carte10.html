@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page de citations aléatoires</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .citation {
+            font-size: 2em;
+            text-align: center;
+            width: 80%;
+        }
+
+        .vert {
+            color: green;
+        }
+
+        .rouge {
+            color: red;
+        }
+
+        .bleu {
+            color: blue;
+        }
+    </style>
+</head>
+<body>
+    <div class="citation" id="citation"></div>
+
+    <script>
+        // Liste des citations, avec balises HTML pour styliser les mots importants, prénoms et noms
+        const citations = [
+            {
+                texte: "Pour le réveillon, il est interdit d'être plus de trois personnes. Qui sont les deux personnes que vous invitez ? De <span class='vert'>soirée désastreuse</span> à <span class='rouge'>soirée géniale</span>"
+            },
+            {
+                texte: "Vos amis ont organisé un apéro surpris pour votre anniversaire. Décrivez la scène. De <span class='vert'>ultra ennuyeuse</span> à <span class='rouge'>complètement géniale</span>"
+            },
+            {
+                texte: "Vous ne pouvez emporter qu'un seul livre pour le restant de vos jours. Quel livre choisissez-vous ? Du <span class='vert'>choix le moins justifiable</span> au <span class='rouge'>choix le plus justifiable</span>"
+            },
+            {
+                texte: "Suite à la victoire de Trump, Kamala Harris décide d'envoyer un tweet. De <span class='vert'>très mauvais perdant</span> à <span class='rouge'>complètement fair-play</span>"
+            },
+            {
+                texte: "Dans votre école, le proviseur remplace la lecture de la lettre de Jean Jaurès par les paroles d'une chanson. Laquelle ? De <span class='vert'>la plus déprimante</span> à <span class='rouge'>celle qui donne le plus le sourire</span>"
+            },
+            {
+                texte: "Mimez votre expression quand on vous insère le coton-tige pour le test COVID. De <span class='vert'>réaction la plus neutre</span> à <span class='rouge'>expression la plus intense</span>"
+            },
+            {
+                texte: "Vous n’avez pas le droit d’acheter un sapin cette année. Que pourriez-vous utiliser à la place ? De <span class='vert'>remplacement le plus ridicule</span> au <span class='rouge'>plus joli</span>"
+            },
+            {
+                texte: "Votre voisin du dessus fait trop de bruit. Comment lui demander de se calmer ? De <span class='vert'>la demande la plus douce</span> à <span class='rouge'>l'intervention la plus directe</span>"
+            },
+            {
+                texte: "Le gardien vous demande de l’aide pour organiser la fête des voisins. Quelle activité proposez-vous ? De <span class='vert'>l'activité la plus ennuyante</span> à <span class='rouge'>la plus attrayante</span>"
+            },
+            {
+                texte: "Vous rencontrez votre nouvelle voisine ou voisin pour la première fois. Présentez-vous. De <span class='vert'>rencontre la plus gênante</span> à <span class='rouge'>super rencontre</span>"
+            },
+            {
+                texte: "Votre voisin vient récupérer son chat que vous avez gardé pendant le week-end. Racontez comment ça s'est passé. De <span class='vert'>c'est la catastrophe</span> à <span class='rouge'>tout s’est bien passé</span>"
+            },
+            {
+                texte: "Trump menace sur Twitter pour rester à la Maison Blanche. Quelle menace fait-il ? De <span class='vert'>petite menace</span> à <span class='rouge'>énorme menace</span>"
+            },
+            {
+                texte: "Vous organisez un dîner parfait. Qui est l'invité d'honneur ? De <span class='vert'>l'invité le plus embarrassant</span> au <span class='rouge'>plus grand rêve</span>"
+            },
+            {
+                texte: "Vous cherchez une excuse pour ne pas participer à une réunion en visioconférence. Quelle est votre excuse ? De <span class='vert'>excuse la moins crédible</span> à <span class='rouge'>excuse la plus convaincante</span>"
+            },
+            {
+                texte: "Vous avez un rendez-vous amoureux ce soir, mais vous avez oublié un détail. Quel est-il ? Du <span class='vert'>détail le moins gênant</span> au <span class='rouge'>pire oubli</span>"
+            },
+            {
+                texte: "Vous n'avez que 5 minutes pour acheter quelque chose au supermarché. Qu'allez-vous prendre ? De <span class='vert'>l'achat le plus inutile</span> au <span class='rouge'>plus essentiel</span>"
+            },
+            {
+                texte: "Vous êtes en vacances et pouvez prendre une seule photo. Quel serait le sujet de cette photo ? De <span class='vert'>la photo la plus banale</span> à <span class='rouge'>la plus mémorable</span>"
+            },
+            {
+                texte: "Quel est votre souvenir d'enfance le plus marquant ? Du <span class='vert'>souvenir le plus banal</span> au <span class='rouge'>souvenir le plus hilarant</span>"
+            },
+            {
+                texte: "Il y a une panne de courant chez vous. Que faites-vous pour passer le temps ? De <span class='vert'>l'activité la moins distrayante</span> à <span class='rouge'>la plus amusante</span>"
+            },
+            {
+                texte: "Vous avez le pouvoir d'inventer un nouvel objet. Quelle invention proposez-vous ? De <span class='vert'>l'invention la plus absurde</span> à <span class='rouge'>la plus révolutionnaire</span>"
+            },
+            {
+                texte: "Vous vous fixez un objectif complètement inédit pour cette année. Quel est-il ? De <span class='vert'>l’objectif le plus inutile</span> au <span class='rouge'>plus ambitieux</span>"
+            },
+            {
+                texte: "Une célébrité vous envoie un message pour votre anniversaire. Que vous dit-elle ? Du <span class='vert'>message le plus embarrassant</span> au <span class='rouge'>plus touchant</span>"
+            },
+            {
+                texte: "Vous avez gagné un week-end tout frais payé, mais la destination est… inattendue. Où partez-vous ? Du <span class='vert'>lieu le plus ennuyeux</span> au <span class='rouge'>plus excitant</span>"
+            },
+            {
+                texte: "Vous créez un nouveau super-héros. Quel nom lui donnez-vous ? Du <span class='vert'>nom le plus ridicule</span> au <span class='rouge'>plus impressionnant</span>"
+            },
+            {
+                texte: "Vous découvrez une énorme araignée chez vous. Quelle est votre réaction ? De <span class='vert'>réaction la plus calme</span> à <span class='rouge'>la plus paniquée</span>"
+            },
+            {
+                texte: "Vous êtes témoin à un mariage et faites un discours. Que révélez-vous ? De <span class='vert'>révélation la moins embarrassante</span> à <span class='rouge'>la plus gênante</span>"
+            },
+            {
+                texte: "Vous devez traduire un proverbe français en anglais, mot pour mot. Quel proverbe choisissez-vous ? De <span class='vert'>la traduction la moins drôle</span> à <span class='rouge'>la plus absurde</span>"
+            },
+            {
+                texte: "Vous êtes agent secret, et on vous donne une mission avec un nom de code. Quel nom choisissez-vous ? Du <span class='vert'>nom le plus discret</span> au <span class='rouge'>plus tape-à-l'œil</span>"
+            },
+            {
+                texte: "Vous êtes en pyjama dans un lieu public. Où êtes-vous et pourquoi ? Du <span class='vert'>lieu le plus banal</span> au <span class='rouge'>plus improbable</span>"
+            },
+            {
+                texte: "Vous choisissez votre dernier repas avant de quitter la Terre. Qu’allez-vous manger ? De <span class='vert'>le repas le plus étrange</span> au <span class='rouge'>plus exquis</span>"
+            },
+            {
+                texte: "Vous proposez une idée pour sauver la planète. Quelle est votre idée ? De <span class='vert'>l'idée la plus ridicule</span> à <span class='rouge'>la plus ingénieuse</span>"
+            },
+            {
+                texte: "Vous recevez un superpouvoir étrange. Lequel est-ce ? Du <span class='vert'>pouvoir le plus inutile</span> au <span class='rouge'>plus étonnant</span>"
+            },
+            {
+                texte: "Vous pouvez vous déplacer de manière unique et incroyable. Comment vous déplacez-vous ? Du <span class='vert'>moyen le plus étrange</span> au <span class='rouge'>plus pratique</span>"
+            },
+            {
+                texte: "Quel est l’aliment que vous détestez ? De <span class='vert'>dégoût léger</span> à <span class='rouge'>dégoût intense</span>"
+            },
+        ];
+
+        // Fonction pour choisir une citation aléatoire et l'afficher avec les styles intégrés
+        function citationAleatoire() {
+            const index = Math.floor(Math.random() * citations.length);
+            document.getElementById("citation").innerHTML = citations[index].texte;
+        }
+
+        // Affiche une citation aléatoire au chargement de la page
+        window.onload = citationAleatoire;
+    </script>
+</body>
+</html>
