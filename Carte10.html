@@ -4,14 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Page de citations aléatoires</title>
+    <!-- Lien vers Adobe Fonts pour la police MoreSugar -->
+    <link rel="stylesheet" href="https://use.typekit.net/xxxxxx.css"> <!-- Remplacez 'xxxxxx' par votre ID Adobe Fonts -->
     <style>
         body {
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
-            font-family: Arial, sans-serif;
+            font-family: "MoreSugar", sans-serif;
+            transition: background-color 0.5s;
         }
 
         .citation {
@@ -20,21 +24,38 @@
             width: 80%;
         }
 
-        .vert {
+        .prenom {
             color: green;
         }
 
-        .rouge {
+        .nom {
             color: red;
         }
 
-        .bleu {
+        .important {
             color: blue;
         }
+
+        .refresh-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+            background-color: #444;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+            .refresh-button:hover {
+                background-color: #666;
+            }
     </style>
 </head>
 <body>
     <div class="citation" id="citation"></div>
+    <button class="refresh-button" onclick="refreshCitation()">Actualiser</button>
 
     <script>
         // Liste des citations, avec balises HTML pour styliser les mots importants, prénoms et noms
@@ -143,13 +164,23 @@
             },
         ];
 
-        // Fonction pour choisir une citation aléatoire et l'afficher avec les styles intégrés
+        // Liste de couleurs pastel
+        const couleursFond = ["#FFDFD3", "#D4F1F4", "#E4C1F9", "#FFD6E0", "#FFFFD1", "#C7CEEA"];
+
+        // Fonction pour choisir une citation et une couleur de fond aléatoire
         function citationAleatoire() {
             const index = Math.floor(Math.random() * citations.length);
             document.getElementById("citation").innerHTML = citations[index].texte;
+            // Changer le fond de la page
+            document.body.style.backgroundColor = couleursFond[Math.floor(Math.random() * couleursFond.length)];
         }
 
-        // Affiche une citation aléatoire au chargement de la page
+        // Fonction appelée par le bouton pour actualiser la citation et le fond
+        function refreshCitation() {
+            citationAleatoire();
+        }
+
+        // Affiche une citation et couleur de fond aléatoire au chargement de la page
         window.onload = citationAleatoire;
     </script>
 </body>
