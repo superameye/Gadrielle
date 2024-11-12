@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meumeye - It100</title>
+    <!-- Importation des polices Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Sour+Gummy&family=Open+100&display=swap" rel="stylesheet">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            transition: background-color 0.5s ease; /* Transition douce */
+        }
+
+        h1 {
+            font-family: 'Sour Gummy', sans-serif;
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+
+        .citation {
+            font-family: 'Open 100', sans-serif;
+            font-size: 2em;
+            text-align: center;
+            width: 80%;
+            margin-bottom: 20px;
+        }
+
+        .vert {
+            color: green;
+        }
+
+        .rouge {
+            color: red;
+        }
+
+        .bleu {
+            color: blue;
+        }
+        /* Style du bouton */
+        .refresh-button {
+            font-size: 1em;
+            padding: 10px 20px;
+            cursor: pointer;
+            background-color: #333;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+            .refresh-button:hover {
+                background-color: #555;
+            }
+    </style>
+</head>
+<body>
+    <h1>De <span class='vert'>1</span> à <span class='rouge'>100</span> !</h1>
+    <div class="citation" id="citation"></div>
+    <button class="refresh-button" onclick="actualiserCitation()">Nouvelle carte</button>
+
+    <script>
+        // Liste des citations avec balises HTML pour styliser certains mots
+        const citations = [
+                {
+                    texte: "Les super-héros, du plus au moins susceptible de gagner un concours de cuisine"
+                },
+                {
+                    texte: "De la pire à la meilleure façon de s'excuser"
+        },
+                {
+                    texte: "Les aliments que vous voulez le moins au plus dans une apocalypse zombie"
+        },
+                {
+                    texte: "Les objets que vous voulez le plus au moins si vous êtes coincé dans l'espace"
+        },
+                {
+                    texte: "Les pires aux meilleures choses à renverser sur vous-même"
+        },
+                {
+                    texte: "Les choses qui rendent quelqu'un le moins au plus susceptible de devenir un super-vilain"
+        },
+                {
+                    texte: "Les villes du plus au moins futuriste"
+        },
+                {
+                    texte: "Les pires aux meilleures choses à dire lors d'un entretien d'embauche"
+        },
+                {
+                    texte: "Les films du moins au plus susceptibles de vous confondre"
+        },
+                {
+                    texte: "Les objets fictifs que vous voulez le plus au moins dans la vie réelle"
+        },
+                {
+                    texte: "Les pires aux meilleurs moments pour perdre votre voix"
+        },
+                {
+                    texte: "Les animaux du moins au plus photogénique"
+        },
+                {
+                    texte: "Les super-pouvoirs du moins au plus gênant"
+        },
+                {
+                    texte: "Les célébrités du moins au plus susceptibles de survivre à une apocalypse zombie"
+        },
+                {
+                    texte: "Les pires aux meilleures choses à regarder en rafale"
+        },
+                {
+                    texte: "Les aliments du moins au plus dangereux à manger en conduisant"
+        },
+                {
+                    texte: "Les chansons du moins au plus susceptibles de rester dans votre tête"
+        },
+                {
+                    texte: "Les méchants fictifs du moins au plus incompris"
+        },
+                {
+                    texte: "Les pires aux meilleures choses à envoyer accidentellement à votre patron"
+        },
+                {
+                    texte: "Les animaux du moins au plus susceptibles d'être bons en stand-up"
+        },
+                {
+                    texte: "Les super-héros du moins au plus susceptibles d'oublier votre anniversaire"
+        },
+                {
+                    texte: "Les films du moins au plus susceptibles d'inspirer un mème"
+        },
+                {
+                    texte: "Les lieux fictifs que vous voulez le moins au plus visiter en vacances"
+        },
+                {
+                    texte: "Les aliments du pire au meilleur à manger avec les mains"
+        },
+                {
+                    texte: "Les célébrités du moins au plus susceptibles d'organiser un dîner chaotique"
+        },
+                {
+                    texte: "Les créatures fictives du moins au plus câlin"
+        },
+                {
+                    texte: "Les pires aux meilleures excuses pour annuler des plans à la dernière minute"
+        },
+                {
+                    texte: "Les choses que vous voulez le moins au plus faire tomber de votre poche"
+        },
+                {
+                    texte: "Les pires aux meilleures choses à trouver dans votre placard"
+        },
+                {
+                    texte: "Les figures historiques du moins au plus susceptibles d'être technophiles"
+        },
+                {
+                    texte: "Les pires aux meilleures choses à se produire lors d'un road trip"
+        },
+                {
+                    texte: "Les choses que vous voulez le moins au plus rencontrer dans un rêve"
+        },
+                {
+                    texte: "Les aliments du moins au plus susceptibles de ruiner votre tenue"
+        },
+                {
+                    texte: "Les pires aux meilleurs objets à oublier en allant à la salle de sport"
+        },
+                {
+                    texte: "Les célébrités du moins au plus susceptibles de s'inviter à un mariage"
+        },
+                {
+                    texte: "Les super-pouvoirs du moins au plus susceptibles de passer inaperçus"
+        },
+                {
+                    texte: "Les choses que vous voulez le moins au plus trouver dans votre grenier"
+        },
+                {
+                    texte: "Les personnages fictifs du moins au plus susceptibles de gagner un concours de danse"
+        },
+                {
+                    texte: "Les animaux du moins au plus susceptibles de voler votre déjeuner"
+        },
+                {
+                    texte: "Les pires aux meilleures excuses pour ne pas faire vos devoirs"
+        },
+                {
+                    texte: "Les super-vilains du moins au plus susceptibles de devenir bons"
+        },
+                {
+                    texte: "Les émissions de télévision du moins au plus susceptibles de vous rendre nostalgique"
+        },
+                {
+                    texte: "Les pires aux meilleurs endroits pour se perdre"
+        },
+                {
+                    texte: "Les objets fictifs du moins au plus utiles dans la vie réelle"
+        },
+                {
+                    texte: "Les animaux du moins au plus susceptibles de dominer le monde"
+        },
+                {
+                    texte: "Les pires aux meilleurs records du monde à battre"
+        },
+                {
+                    texte: "Les événements historiques du moins au plus gênants à voir"
+        },
+                {
+                    texte: "Les personnages fictifs du moins au plus susceptibles d'organiser une fête surprise"
+        },
+                {
+                    texte: "Les pires aux meilleurs sons pour se réveiller"
+        },
+                {
+                    texte: "Les célébrités du moins au plus susceptibles d'avoir une identité secrète"
+        },
+                {
+                    texte: "Les aliments du moins au plus susceptibles d'être mal compris"
+        },
+                {
+                    texte: "Les pires aux meilleures choses à porter à une fête costumée"
+        },
+                {
+                    texte: "Les super-pouvoirs du moins au plus embarrassants"
+        },
+                {
+                    texte: "Les choses que vous voulez le moins au plus marcher dessus pieds nus"
+        },
+                {
+                    texte: "Les célébrités du moins au plus susceptibles de participer à un concours de talents"
+        },
+                {
+                    texte: "Les pires aux meilleures choses à faire le jour de votre anniversaire"
+        },
+                {
+                    texte: "Les choses que vous voulez le moins au plus trouver dans votre frigo"
+        },
+                {
+                    texte: "Les créatures fictives du moins au plus susceptibles d'être réelles"
+        },
+                {
+                    texte: "Les aliments du moins au plus susceptibles de ruiner un premier rendez-vous"
+        },
+                {
+                    texte: "Les super-héros du moins au plus susceptibles de trop dormir"
+        },
+                {
+                    texte: "Les pires aux meilleures raisons d'appeler malade"
+        },
+                {
+                    texte: "Les univers fictifs du moins au plus confus"
+        },
+                {
+                    texte: "Les aliments du moins au plus susceptibles de déclencher un débat"
+        },
+                {
+                    texte: "Les super-pouvoirs du moins au plus susceptibles de se retourner contre vous"
+        },
+                {
+                    texte: "Les choses que vous voulez le moins au plus voir dans une maison hantée"
+        },
+                {
+                    texte: "Les célébrités du moins au plus susceptibles de faire une crise de colère"
+        },
+                {
+                    texte: "Les pires aux meilleures choses à entendre dans un message vocal"
+        },
+                {
+                    texte: "Les animaux du moins au plus susceptibles de gagner un concours de beauté"
+        },
+                {
+                    texte: "Les personnages fictifs du moins au plus susceptibles de devenir une star de la télé-réalité"
+        },
+                {
+                    texte: "Les aliments du moins au plus utiles dans une bataille de nourriture"
+        },
+                {
+                    texte: "Les pires aux meilleurs endroits pour s'endormir accidentellement"
+        },
+                {
+                    texte: "Les créatures fictives du moins au plus terrifiantes"
+        },
+                {
+                    texte: "Les super-héros du moins au plus susceptibles de violer la loi"
+        },
+                {
+                    texte: "Les pires aux meilleures raisons d'écrire une autobiographie"
+        },
+                {
+                    texte: "Les aliments du moins au plus susceptibles d'être considérés comme 'exotiques'"
+        },
+                {
+                    texte: "Les choses que vous voulez le moins au plus trouver sous votre lit"
+        },
+                {
+                    texte: "Les super-pouvoirs du moins au plus susceptibles de créer le chaos"
+        },
+                {
+                    texte: "Les figures historiques du moins au plus susceptibles d'apprécier la technologie moderne"
+        },
+                {
+                    texte: "Les pires aux meilleures choses à entendre lors d'un premier rendez-vous"
+        },
+                {
+                    texte: "Les célébrités du moins au plus susceptibles de devenir président"
+        },
+                {
+                    texte: "Les super-vilains du moins au plus susceptibles de prendre leur retraite"
+        },
+                {
+                    texte: "Les objets fictifs du moins au plus dangereux à utiliser"
+        },
+                {
+                    texte: "Les pires aux meilleures choses à se produire lors d'une réunion de famille"
+        },
+                {
+                    texte: "Les super-héros du moins au plus susceptibles de gagner un jeu télévisé"
+        },
+                {
+                    texte: "Les choses que vous voulez le moins au plus perdre dans un lieu public"
+        },
+                {
+                    texte: "Les personnages fictifs du moins au plus susceptibles d'être en retard"
+        },
+                {
+                    texte: "Les pires aux meilleures excuses pour manquer un mariage"
+        },
+                {
+                    texte: "Les aliments du moins au plus susceptibles de vous surprendre"
+        },
+                {
+                    texte: "Les super-pouvoirs du moins au plus susceptibles d'être surestimés"
+        }
+        ];
+
+        // Fonction pour choisir une citation aléatoire et l'afficher avec les styles intégrés
+        function citationAleatoire() {
+            const index = Math.floor(Math.random() * citations.length);
+            document.getElementById("citation").innerHTML = citations[index].texte;
+        }
+
+        // Fonction pour générer une couleur pastel aléatoire
+        function couleurPastelAleatoire() {
+            const r = Math.floor(200 + Math.random() * 55); // Valeur entre 200 et 255
+            const g = Math.floor(200 + Math.random() * 55); // Valeur entre 200 et 255
+            const b = Math.floor(200 + Math.random() * 55); // Valeur entre 200 et 255
+            return `rgb(${r}, ${g}, ${b})`;
+        }
+
+        // Fonction pour changer la citation et la couleur de fond
+        function actualiserCitation() {
+            citationAleatoire();
+            document.body.style.backgroundColor = couleurPastelAleatoire();
+        }
+
+        // Affiche une citation aléatoire et change la couleur de fond au chargement de la page
+        window.onload = actualiserCitation;
+    </script>
+</body>
+</html>
