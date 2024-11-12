@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Page de citations aléatoires</title>
-    <!-- Lien vers Adobe Fonts pour la police MoreSugar -->
-    <link rel="stylesheet" href="https://use.typekit.net/xxxxxx.css"> <!-- Remplacez 'xxxxxx' par votre ID Adobe Fonts -->
+    <title>Meumeye - tip10</title>
+    <!-- Importation des polices Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Sour+Gummy&family=Open+100&display=swap" rel="stylesheet">
     <style>
         body {
             display: flex;
@@ -14,51 +14,59 @@
             align-items: center;
             height: 100vh;
             margin: 0;
-            font-family: "MoreSugar", sans-serif;
-            transition: background-color 0.5s;
+            font-family: Arial, sans-serif;
+            transition: background-color 0.5s ease; /* Transition douce */
+        }
+
+        h1 {
+            font-family: 'Sour Gummy', sans-serif;
+            font-size: 3em;
+            margin-bottom: 20px;
         }
 
         .citation {
+            font-family: 'Open 100', sans-serif;
             font-size: 2em;
             text-align: center;
             width: 80%;
+            margin-bottom: 20px;
         }
 
-        .prenom {
+        .vert {
             color: green;
         }
 
-        .nom {
+        .rouge {
             color: red;
         }
 
-        .important {
+        .bleu {
             color: blue;
         }
-
+        /* Style du bouton */
         .refresh-button {
-            margin-top: 20px;
-            padding: 10px 20px;
             font-size: 1em;
+            padding: 10px 20px;
             cursor: pointer;
-            background-color: #444;
-            color: #fff;
+            background-color: #333;
+            color: white;
             border: none;
             border-radius: 5px;
-            transition: background-color 0.3s;
+            transition: background-color 0.3s ease;
         }
 
             .refresh-button:hover {
-                background-color: #666;
+                background-color: #555;
             }
     </style>
 </head>
 <body>
+    <h1>De <span class='vert'>1</span> à <span class='rouge'>10</span> !</h1>
     <div class="citation" id="citation"></div>
-    <button class="refresh-button" onclick="refreshCitation()">Actualiser</button>
+    <button class="refresh-button" onclick="actualiserCitation()">Nouvelle carte</button>
 
     <script>
-        // Liste des citations, avec balises HTML pour styliser les mots importants, prénoms et noms
+        // Liste des citations avec balises HTML pour styliser certains mots
         const citations = [
             {
                 texte: "Pour le réveillon, il est interdit d'être plus de trois personnes. Qui sont les deux personnes que vous invitez ? De <span class='vert'>soirée désastreuse</span> à <span class='rouge'>soirée géniale</span>"
@@ -164,24 +172,28 @@
             },
         ];
 
-        // Liste de couleurs pastel
-        const couleursFond = ["#FFDFD3", "#D4F1F4", "#E4C1F9", "#FFD6E0", "#FFFFD1", "#C7CEEA"];
-
-        // Fonction pour choisir une citation et une couleur de fond aléatoire
+        // Fonction pour choisir une citation aléatoire et l'afficher avec les styles intégrés
         function citationAleatoire() {
             const index = Math.floor(Math.random() * citations.length);
             document.getElementById("citation").innerHTML = citations[index].texte;
-            // Changer le fond de la page
-            document.body.style.backgroundColor = couleursFond[Math.floor(Math.random() * couleursFond.length)];
         }
 
-        // Fonction appelée par le bouton pour actualiser la citation et le fond
-        function refreshCitation() {
+        // Fonction pour générer une couleur pastel aléatoire
+        function couleurPastelAleatoire() {
+            const r = Math.floor(200 + Math.random() * 55); // Valeur entre 200 et 255
+            const g = Math.floor(200 + Math.random() * 55); // Valeur entre 200 et 255
+            const b = Math.floor(200 + Math.random() * 55); // Valeur entre 200 et 255
+            return `rgb(${r}, ${g}, ${b})`;
+        }
+
+        // Fonction pour changer la citation et la couleur de fond
+        function actualiserCitation() {
             citationAleatoire();
+            document.body.style.backgroundColor = couleurPastelAleatoire();
         }
 
-        // Affiche une citation et couleur de fond aléatoire au chargement de la page
-        window.onload = citationAleatoire;
+        // Affiche une citation aléatoire et change la couleur de fond au chargement de la page
+        window.onload = actualiserCitation;
     </script>
 </body>
 </html>
