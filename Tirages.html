@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page avec options aléatoires et chronomètre</title>
+    <!-- Importation des polices Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Sour+Gummy&family=Open+100&display=swap" rel="stylesheet">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            transition: background-color 1s ease; /* Transition douce pour le fond */
+        }
+
+        h1 {
+            font-family: 'Sour Gummy', sans-serif;
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .result {
+            font-family: 'Open 100', sans-serif;
+            font-size: 2em;
+            margin-top: 20px;
+        }
+
+        .button {
+            font-size: 1em;
+            padding: 10px 20px;
+            cursor: pointer;
+            background-color: #333;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+            .button:hover {
+                background-color: #555;
+            }
+    </style>
+</head>
+<body>
+    <h1>Options aléatoires</h1>
+    <div class="button-container">
+        <button class="button" onclick="tirageDe6Faces()">Tirage d'un dé à 6 faces</button>
+        <button class="button" onclick="tirageDeuxDes()">Tirage de deux dés à 6 faces</button>
+        <button class="button" onclick="tirageNombre()">Tirage entre 1 et un nombre choisi</button>
+        <button class="button" onclick="gererChronometre()">Démarrer/Pause/Réinitialiser Chronomètre</button>
+    </div>
+    <div class="result" id="result"></div>
+    <div class="result" id="chronometre">00:00:00</div>
+
+    <script>
+        // Fonction pour générer une couleur pastel aléatoire
+        function couleurPastelAleatoire() {
+            const r = Math.floor(200 + Math.random() * 55); // Valeur entre 200 et 255
+            const g = Math.floor(200 + Math.random() * 55); // Valeur entre 200 et 255
+            const b = Math.floor(200 + Math.random() * 55); // Valeur entre 200 et 255
+            return `rgb(${r}, ${g}, ${b})`;
+        }
+
+        // Change la couleur de fond toutes les 2 secondes
+        setInterval(() => {
+            document.body.style.backgroundColor = couleurPastelAleatoire();
+        }, 2000);
+
+        // Fonction pour tirer un nombre entre 1 et 6
+        function tirageDe6Faces() {
+            const result = Math.floor(Math.random() * 6) + 1;
+            document.getElementById("result").textContent = `Résultat du dé à 6 faces : ${result}`;
+        }
+
+        // Fonction pour tirer deux dés à 6 faces
+        function tirageDeuxDes() {
+            const result1 = Math.floor(Math.random() * 6) + 1;
+            const result2 = Math.floor(Math.random() * 6) + 1;
+            document.getElementById("result").textContent = `Résultat des deux dés : ${result1} et ${result2}`;
+        }
+
+        // Fonction pour tirer un nombre aléatoire entre 1 et un nombre saisi par l'utilisateur
+        function tirageNombre() {
+            const max = parseInt(prompt("Entrez un nombre maximum pour le tirage :"));
+            if (isNaN(max) || max < 1) {
+                document.getElementById("result").textContent = "Entrée non valide. Veuillez entrer un nombre entier supérieur à 0.";
+                return;
+            }
+            const result = Math.floor(Math.random() * max) + 1;
+            document.getElementById("result").textContent = `Résultat du tirage entre 1 et ${max} : ${result}`;
+        }
+
+        // Variables pour le chronomètre
+        let chronometreActif = false;
+        let temps = 0;
+        let intervalChrono;
+
+        // Fonction pour gérer le chronomètre
+        function gererChronometre() {
+            if (!chronometreActif) { // Démarre le chronomètre
+                chronometreActif = true;
+                intervalChrono = setInterval(() => {
+                    temps++;
+                    afficherChronometre();
+                }, 1000);
+            } else { // Met en pause et réinitialise le chronomètre
+                chronometreActif = false;
+                clearInterval(intervalChrono);
+                temps = 0;
+                afficherChronometre();
+            }
+        }
+
+        // Fonction pour afficher le temps du chronomètre en format hh:mm:ss
+        function afficherChronometre() {
+            const heures = String(Math.floor(temps / 3600)).padStart(2, '0');
+            const minutes = String(Math.floor((temps % 3600) / 60)).padStart(2, '0');
+            const secondes = String(temps % 60).padStart(2, '0');
+            document.getElementById("chronometre").textContent = `${heures}:${minutes}:${secondes}`;
+        }
+    </script>
+</body>
+</html>
