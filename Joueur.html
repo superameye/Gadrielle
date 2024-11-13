@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tirage du Premier Joueur</title>
+    <!-- Importation des polices Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Sour+Gummy&family=Open+100&display=swap" rel="stylesheet">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            transition: background-color 1s ease; /* Transition douce pour le fond */
+        }
+
+        h1 {
+            font-family: 'Sour Gummy', sans-serif;
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+
+        .controls {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .result {
+            font-family: 'Open 100', sans-serif;
+            font-size: 2em;
+            margin-top: 20px;
+        }
+
+        .button {
+            font-size: 1em;
+            padding: 10px 20px;
+            cursor: pointer;
+            background-color: #333;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+            .button:hover {
+                background-color: #555;
+            }
+
+        input[type="range"] {
+            width: 100%;
+            max-width: 300px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Tirage du Premier Joueur</h1>
+    <div class="controls">
+        <label for="nbJoueurs">Nombre de joueurs : <span id="valeurJoueurs">2</span></label>
+        <input type="range" id="nbJoueurs" min="2" max="20" value="2" oninput="afficherValeurJoueurs()">
+        <button class="button" onclick="tirerPremierJoueur()">Tirer le premier joueur</button>
+    </div>
+    <div class="result" id="result"></div>
+
+    <script>
+        // Fonction pour générer une couleur pastel aléatoire
+        function couleurPastelAleatoire() {
+            const r = Math.floor(200 + Math.random() * 55); // Valeur entre 200 et 255
+            const g = Math.floor(200 + Math.random() * 55); // Valeur entre 200 et 255
+            const b = Math.floor(200 + Math.random() * 55); // Valeur entre 200 et 255
+            return `rgb(${r}, ${g}, ${b})`;
+        }
+
+        // Change la couleur de fond toutes les 2 secondes
+        setInterval(() => {
+            document.body.style.backgroundColor = couleurPastelAleatoire();
+        }, 2000);
+
+        // Fonction pour afficher la valeur actuelle du curseur
+        function afficherValeurJoueurs() {
+            const valeur = document.getElementById("nbJoueurs").value;
+            document.getElementById("valeurJoueurs").textContent = valeur;
+        }
+
+        // Fonction pour tirer aléatoirement le numéro du premier joueur
+        function tirerPremierJoueur() {
+            const nbJoueurs = parseInt(document.getElementById("nbJoueurs").value);
+            const joueur = Math.floor(Math.random() * nbJoueurs) + 1;
+            document.getElementById("result").textContent = `Le premier joueur est le joueur numéro : ${joueur}`;
+        }
+    </script>
+</body>
+</html>
