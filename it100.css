@@ -1,0 +1,53 @@
+body {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+	margin: 0;
+	font-family: Arial, sans-serif;
+	transition: background-color 0.5s ease;
+	/* Transition douce */
+}
+
+h1 {
+	font-family: 'Sour Gummy', sans-serif;
+	font-size: 3em;
+	margin-bottom: 20px;
+}
+
+.citation {
+	font-family: 'Open 100', sans-serif;
+	font-size: 2em;
+	text-align: center;
+	width: 80%;
+	margin-bottom: 20px;
+}
+
+.vert {
+	color: green;
+}
+
+.rouge {
+	color: red;
+}
+
+.bleu {
+	color: blue;
+}
+
+/* Style du bouton */
+.refresh-button {
+	font-size: 1em;
+	padding: 10px 20px;
+	cursor: pointer;
+	background-color: #333;
+	color: white;
+	border: none;
+	border-radius: 5px;
+	transition: background-color 0.3s ease;
+}
+
+.refresh-button:hover {
+	background-color: #555;
+}
