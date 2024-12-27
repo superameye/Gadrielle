@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<title>mrmeumeye</title>
+	<link rel="stylesheet" href="mrmeumeye.css">
+</head>
+
+<body>
+	<div id="getnamescontainer">
+		<h1>Quelques infos joueurs</h1>
+		<div class="hflexbox">
+			<h2>Ajouter un joueur</h2>
+			<input id="nameinput">
+			<button id="nameinputokbutton" type=submit>Ajouter</button>
+		</div>
+		<div class="hflexbox">
+			<p>Liste des joueurs : </p>
+			<p id="playerlist"></p>
+		</div>
+		<div class="hflexbox">
+			<h2>Définir les options de jeu</h2>
+			<input id="nbfalsewordsinput" type="number" placeholder="nombre de synonymes">
+			<input id="nbmrwhitesinput" type="number" placeholder="nombre de mr white">
+		</div>
+		<div class="hflexbox">
+			<h2>Cliquez pour démarrer la partie !</h2>
+			<button id="startbutton">Demarrer</button>
+		</div>
+	</div>
+	<div id="revelationcontainer">
+		<h1>Faites tourner le téléphone !</h1>
+		<div class="hflexbox">
+			<p> Joueur actuel : </p>
+			<p id="actualnamediv"></p>
+		</div>
+		<div class="hflexbox">
+			<p> Mot : </p>
+			<p id="actualworddiv"></p>
+		</div>
+		<div class="hflexbox">
+			<button id="revealbutton">révéler</button>
+			<button id="nextplayerbutton">joueur suivant</button>
+		</div>
+
+	</div>
+	<div id="playcontainer">
+		<h1>Let's jouer !</h1>
+		<div class="hflexbox">
+			<h2>Joueur qui commence : </h2>
+			<p id="playerdiv"></p>
+		</div>
+	</div>
+
+	<script src="mrmeumeye.js"></script>
+	<script src="synonymes.js"></script>
+</body>
+
+</html>
