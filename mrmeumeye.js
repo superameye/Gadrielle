@@ -1,5 +1,6 @@
 let g_playerlist = [];
 let g_synonymes;
+let g_synonyme;
 let g_cards = [];
 let g_nbfalsewords = 2;
 let g_nbmrwhites = 2;
@@ -28,7 +29,7 @@ function nRandIntBetween(nb, max) {
 
 function generateTable() {
 	console.log("g_nbfalsewords = ", g_nbfalsewords, "g_nbmrwhites = ", g_nbmrwhites);
-	var synonyme = g_synonymes[randIntBetween(0, g_synonymes.length)];
+	g_synonyme = g_synonymes[randIntBetween(0, g_synonymes.length)];
 	var firstplayerindex = randIntBetween(0, g_playerlist.length);
 	var specialIndexes = nRandIntBetween(g_nbmrwhites + g_nbfalsewords, g_playerlist.length)
 	var mrWhiteIndexes = specialIndexes.slice(0, g_nbmrwhites);  //indexes zero to g_nbmrwhites - 1
@@ -42,11 +43,11 @@ function generateTable() {
 			role = "mr white";
 		}
 		else if (mrFalseWordsIndexes.includes(playerindex)) {
-			word = synonyme[1];
+			word = g_synonyme[1];
 			role = "under cover";
 		}
 		else {
-			word = synonyme[0];
+			word = g_synonyme[0];
 			role = "joueur normal";
 		}
 		g_cards[i] = { playername: playername, word: word, role: role, status: "alive" };
@@ -54,27 +55,89 @@ function generateTable() {
 	console.log("Here are the cards : ", g_cards);
 }
 
-// Check if there are remaining players, if normal player wins...
-// Prompt if an eliminated people was undercover
-function checkStatusOfGame() {
-	if (g_cards.filter(card => card.status == "alive").length == 0)
-		infodiv.innerHTML = "Il n'y a plus de joueur !";
+function createDeathButtons() {
+	while (eliminationcontainer.firstChild) {
+		eliminationcontainer.removeChild(eliminationcontainer.firstChild);
+	}
+
+	for (let card of g_cards) {
+		if (card.status == "alive") {
+			let newbutton = document.createElement("button");
+			newbutton.innerHTML = card.playername;
+			newbutton.addEventListener('click', function () {
+				updateGame(this.innerHTML);  // The button will send his value to update function
+			})
+			eliminationcontainer.appendChild(newbutton);
+		}
+	}
 }
 
-function createDeathButtons() {
-	for (let card of g_cards) {
-		let newbutton = document.createElement("button");
-		newbutton.innerHTML = card.playername;
-		newbutton.addEventListener('click', function () {
-			cardIndex = g_cards.findIndex(card => card.playername == this.innerHTML);
-			card = g_cards[cardIndex];
-			g_cards[cardIndex].status = "dead";
-			infodiv.innerHTML = "Le joueur " + card.playername + " était " + card.role + " !";
-			eliminationcontainer.removeChild(this);
-			checkStatusOfGame();
-		})
-		eliminationcontainer.appendChild(newbutton);
+// Check if there are remaining players, if normal player wins...
+// Prompt if an eliminated people was undercover
+function updateGame(killedPlayer = "none") {
+	let gameEnd = 0;
+
+	if (killedPlayer != "none") { // a player has just been killed
+		let killedCard = g_cards.find(card => card.playername == killedPlayer);
+		infodiv.innerHTML = killedPlayer + " a été éliminé ! Il était " + killedCard.role;
+		killedCard.status = "dead";
+		if (killedCard.role == "mr white") {
+			initcontainer.style.display = "none";
+			revelationcontainer.style.display = "none";
+			playcontainer.style.display = "none";
+			tentativecontainer.style.display = "block";
+			tentativeplayerdiv.innerHTML = killedPlayer;
+			tentativeokbutton.addEventListener('click', function () {
+				if (tentativeinput.value.toLowerCase() == g_synonyme[0].toLowerCase()) {
+					infodiv.innerHTML += " Et c'est gagné pour mr white !";
+					initcontainer.style.display = "none";
+					revelationcontainer.style.display = "none";
+					playcontainer.style.display = "block";
+					tentativecontainer.style.display = "none";
+				} else {
+					infodiv.innerHTML += " Et c'est perdu pour mr white !";
+					initcontainer.style.display = "none";
+					revelationcontainer.style.display = "none";
+					playcontainer.style.display = "block";
+					tentativecontainer.style.display = "none";
+				}
+			})
+		}
 	}
+
+	var nbOfUndercover = g_cards.filter(card => card.role == "under cover" && card.status == "alive").length;
+	var nbOfMrWhite = g_cards.filter(card => card.role == "mr white" && card.status == "alive").length;
+	var nbOfNormal = g_cards.filter(card => card.role == "joueur normal" && card.status == "alive").length;
+	var nbOfPlayers = g_cards.filter(card => card.status == "alive").length;
+
+	if (nbOfPlayers == 0) {
+		infodiv.innerHTML = "Il n'y a plus de joueur !";
+		gameEnd = 1;
+	}
+	if (nbOfNormal == 0) {
+		infodiv.innerHTML = "Il n'y a plus de joueur normal ! Les under cover ont gagné !";
+		gameEnd = 1;
+	}
+	if (nbOfPlayers <= 2) {
+		infodiv.innerHTML = "Il n'y a plus que 2 joueurs ! C'est les spéciaux qui gagnent !";
+		gameEnd = 1;
+	}
+	if (nbOfMrWhite == 0 && nbOfUndercover == 0) {
+		infodiv.innerHTML = "Il n'y a plus de joueurs spéciaux ! C'est fini !";
+		gameEnd = 1;
+	}
+	if (gameEnd == 1) {  // display scores
+		while (resultsdiv.firstChild) {
+			resultsdiv.removeChild(resultsdiv.firstChild);
+		}
+		for (card of g_cards) {
+			let newElem = document.createElement("p");
+			newElem.innerHTML = card.playername + " était " + card.role + " et il est " + card.status;
+			resultsdiv.appendChild(newElem);
+		}
+	}
+	createDeathButtons();
+
 }
 
 // Get the names of players
@@ -96,7 +159,7 @@ startbutton.addEventListener('click', function () {
 	initcontainer.style.display = "none";
 	revelationcontainer.style.display = "block";
 	playcontainer.style.display = "none";
-	actualnamediv.innerHTML = "premier joueur : " + g_cards[0].playername;
+	actualnamediv.innerHTML = g_cards[0].playername;
 	actualworddiv.innerHTML = "clique sur révéler pour révéler";
 })
 
@@ -115,13 +178,15 @@ nextplayerbutton.addEventListener('click', function () {
 		initcontainer.style.display = "none";
 		revelationcontainer.style.display = "none";
 		playcontainer.style.display = "block";
+		tentativecontainer.style.display = "none";
 		playerdiv.innerHTML = g_cards[0].playername;
 		infodiv.innerHTML = "";
-		checkStatusOfGame();
-		createDeathButtons();
+		while (resultsdiv.firstChild) {
+			resultsdiv.removeChild(resultsdiv.firstChild);
+		}
+		updateGame();
 	}
 })
-
 
 // Restart
 restartbutton.addEventListener('click', function () {
@@ -129,9 +194,11 @@ restartbutton.addEventListener('click', function () {
 	initcontainer.style.display = "block";
 	revelationcontainer.style.display = "none";
 	playcontainer.style.display = "none";
+	tentativecontainer.style.display = "none";
 })
 
 initcontainer.style.display = "block";
 revelationcontainer.style.display = "none";
 playcontainer.style.display = "none";
+tentativecontainer.style.display = "none";
 
