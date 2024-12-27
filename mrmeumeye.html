@@ -8,11 +8,11 @@
 </head>
 
 <body>
-	<div id="getnamescontainer">
+	<div id="initcontainer">
 		<h1>Quelques infos joueurs</h1>
 		<div class="hflexbox">
 			<h2>Ajouter un joueur</h2>
-			<input id="nameinput">
+			<input id="nameinput" placeholder="Nom du joueur">
 			<button id="nameinputokbutton" type=submit>Ajouter</button>
 		</div>
 		<div class="hflexbox">
@@ -21,7 +21,7 @@
 		</div>
 		<div class="hflexbox">
 			<h2>Définir les options de jeu</h2>
-			<input id="nbfalsewordsinput" type="number" placeholder="nombre de synonymes">
+			<input id="nbfalsewordsinput" type="number" placeholder="nombre de undercover">
 			<input id="nbmrwhitesinput" type="number" placeholder="nombre de mr white">
 		</div>
 		<div class="hflexbox">
@@ -50,6 +50,15 @@
 		<div class="hflexbox">
 			<h2>Joueur qui commence : </h2>
 			<p id="playerdiv"></p>
+		</div>
+		<div class="hflexbox">
+			<h2>Eliminer un joueur !</h2>
+			<div id="eliminationcontainer"></div>
+		<div class="hflexbox">
+			<p id="infodiv"></p>
+		</div>
+		<div class="hflexbox">
+			<button id="restartbutton">Redémarrer la partie</button>
 		</div>
 	</div>
 
