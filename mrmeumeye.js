@@ -88,7 +88,7 @@ function updateGame(killedPlayer = "none") {
 		if (killedCard.role == "mr white") {
 			let tentative = prompt("Il s'agit d'un Mr White ! Il a le droit à une tentative !");
 			if (tentative.toLowerCase() == g_synonyme[0].toLowerCase()) {
-				infodiv.innerHTML += " Et c'est gagné pour mr white !";
+				infodiv.innerHTML += " Et mr white a trouvé le mot !";
 				gameEnd = 1;
 			} else {
 				infodiv.innerHTML += " Et c'est perdu pour mr white !";
@@ -117,6 +117,18 @@ function updateGame(killedPlayer = "none") {
 		infodiv.innerHTML += "Il n'y a plus qu'un spécial et un normal ! Les spéciaux gagnent !"
 		gameEnd = 1;
 	}
+	if (nbOfNormal > (nbOfMrWhite + nbOfUndercover)) {
+		infodiv.innerHTML += "Il y a une majorité de normaux ! Les normaux gagnent !"
+		gameEnd = 1;
+	}
+	if (nbOfMrWhite > (nbOfNormal + nbOfUndercover)) {
+		infodiv.innerHTML += "Il y a une majorité de mr white ! Les mr white gagnent !"
+		gameEnd = 1;
+	}
+	if (nbOfUndercover > (nbOfNormal + nbOfMrWhite)) {
+		infodiv.innerHTML += "Il y a une majorité de undercover ! Les undercover gagnent !"
+		gameEnd = 1;
+	}
 	if (gameEnd == 1) {  // display scores
 		while (resultsdiv.firstChild) {
 			resultsdiv.removeChild(resultsdiv.firstChild);
@@ -130,7 +142,7 @@ function updateGame(killedPlayer = "none") {
 	} else {
 		removeDeathButtons();
 		createDeathButtons();
-		infodiv.innerHTML += " la partie continue !";
+		infodiv.innerHTML += " la partie continue ! Il reste " + nbOfNormal + " normaux, " + nbOfUndercover + " undercover et " + nbOfMrWhite + " mr white.";
 	}
 }
 

@@ -1,73 +1,90 @@
+/* General reset and responsive setup */
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+body {
+	font-family: 'Arial', sans-serif;
+	background-color: #f4f4f9;
+	color: #333;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-height: 100vh;
+	padding: 1em;
+}
+
+#initcontainer,
+#revelationcontainer,
+#playcontainer {
+	background-color: #fff;
+	border-radius: 10px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	padding: 1.5em;
+	max-width: 600px;
+	width: 100%;
+	text-align: center;
+}
+
 .hflexbox {
 	display: flex;
-	flex-direction: row;
+	flex-direction: column;
 	align-items: center;
-	justify-content: space-around;
-	z-index: 2;
-	flex-wrap: wrap;
-	padding-bottom: 0.3em;
-	margin-bottom: 0.3em;
-	width: 100%;
-	border-bottom: 2px dotted;
+	gap: 1em;
+	margin-bottom: 1.5em;
 }
 
-button,
-input {
-	width: 20em;
-	text-decoration: none;
-	transition-duration: 0.4s;
-	padding-bottom: 0.5ch;
-	padding-top: 0.5ch;
-	margin: 0;
-	font-family: "Courier New", Courier, monospace;
-	font-weight: bold;
+input,
+button {
+	width: 90%;
+	max-width: 400px;
+	padding: 0.8em;
 	font-size: 1rem;
-	border: 2px solid;
-	border-radius: 2px;
-	text-align: center;
-	border-color: black;
+	border: 2px solid #00623e;
+	border-radius: 5px;
+	outline: none;
 }
 
-input {
-	color: grey;
-	background-color: transparent;
+input::placeholder {
+	color: #999;
 }
 
 button {
-	color: black;
-	background-color: #ffd5aa;
+	background-color: #00623e;
+	color: white;
+	cursor: pointer;
+	transition: background-color 0.3s;
 }
 
 button:hover {
-	background-color: #00623e;
-	color: white;
+	background-color: #004d2c;
 }
 
+h1,
+h2,
 p {
-	font-family: "Courier New", Courier, monospace;
-	font-size: 0.8rem;
-	font-weight: bold;
-	background-color: white;
+	margin-bottom: 0.8em;
 }
 
 h1 {
-	font-family: "Courier New", Courier, monospace;
-	font-size: 1.3rem;
-	font-weight: bold;
-	width: 100%;
-	text-align: center;
-	padding: 0;
-	margin: 0;
+	font-size: 1.5rem;
 	color: #00623e;
-	padding-bottom: 1em;
 }
 
 h2 {
-	font-family: "Courier New", Courier, monospace;
 	font-size: 1.2rem;
-	font-weight: bold;
-	width: 100%;
-	text-align: center;
-	padding: 0;
-	margin: 0;
+}
+
+p {
+	font-size: 1rem;
+}
+
+/* Results display */
+#resultsdiv p {
+	background-color: #e9f5f0;
+	padding: 0.5em;
+	border-radius: 5px;
+	margin-bottom: 0.5em;
 }
