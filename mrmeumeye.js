@@ -105,15 +105,15 @@ function updateGame(killedPlayer = "none") {
 
 	// Guards for wrong game configuration
 	if (gameEnd == 0 && nbOfPlayers == 0) {
-		infodiv.innerHTML += "Il n'y a plus de joueur ! ";
+		infodiv.innerHTML += "Bizarre : Il n'y a plus de joueur ! ";
 		gameEnd = 1;
 	}
 	if (gameEnd == 0 && nbOfNormal == 0) {
-		infodiv.innerHTML += "Il n'y a plus de civil ! Les under cover ont gagné ! ";
+		infodiv.innerHTML += "Bizarre : Il n'y a plus de civil ! Les under cover ont gagné ! ";
 		gameEnd = 1;
 	}
 	if (gameEnd == 0 && nbOfMrWhite == 0 && nbOfUndercover == 0) {
-		infodiv.innerHTML += "Il n'y a plus de joueurs spéciaux ! C'est fini ! ";
+		infodiv.innerHTML += "Bizarre : Il n'y a plus de joueurs spéciaux ! C'est fini ! ";
 		gameEnd = 1;
 	}
 
