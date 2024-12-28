@@ -85,13 +85,15 @@ h1,
 h2,
 p,
 input,
-button {
+button,
+summary {
 	margin-bottom: 0.8em;
 	font-family: "VT323", serif;
 	overflow-wrap: anywhere;
 }
 
-h1 {
+h1,
+summary {
 	font-size: 5rem;
 	color: #00623e;
 }
@@ -153,4 +155,8 @@ logo {
 	font-size: 6rem;
 	color: #ff9966;
 	font-family: "Rubik Vinyl", serif;
+}
+
+ul {
+	text-align: left;
 }

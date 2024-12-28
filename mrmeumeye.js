@@ -84,12 +84,12 @@ function updateGame(killedPlayer = "none") {
 		let killedCard = g_cards.find(card => card.playername == killedPlayer);
 		infodiv.innerHTML += killedPlayer + " a été éliminé ! Il était " + killedCard.role + ". ";
 		killedCard.status = "dead";
-		
+
 		if (killedCard.role == "mr white") {
 			let tentative = prompt("Il s'agit d'un Mr White ! Il a le droit à une tentative !");
 			// Le mr white qui trouve le mot gagne la partie
 			if (tentative.toLowerCase() == g_synonyme[0].toLowerCase()) {
-				infodiv.innerHTML += "Et mr white a trouvé le mot : " + g_synonyme[0] + ". ";
+				infodiv.innerHTML += "Et mr white a trouvé le mot : " + g_synonyme[0] + ". Il gagne 6 points ! ";
 				gameEnd = 1;
 				killedCard.status = "alive";
 			} else {
@@ -120,17 +120,12 @@ function updateGame(killedPlayer = "none") {
 	// Normal rules game ending conditions
 	// les civils gagnent si ils ont éliminé tous les undercover et les mr white
 	if (gameEnd == 0 && nbOfNormal == 1 && (nbOfMrWhite + nbOfUndercover) == 0) {
-		infodiv.innerHTML += "Il n'y a plus aucun undercover ni mr white ! Les civils gagnent ! "
+		infodiv.innerHTML += "Il n'y a plus aucun undercover ni mr white ! Les civils gagnent 2 points ! "
 		gameEnd = 1;
 	}
-	// les undercover gagnent si il ne reste plus qu'un seul civil et qu'il y a au moins 1 undercover
-	if (gameEnd == 0 && nbOfUndercover >= 1 && nbOfNormal == 1) {
-		infodiv.innerHTML += "Il n'y a plus qu'un civil ! Les undercover gagnent ! "
-		gameEnd = 1;
-	}
-	// les undercover gagnent si il ne reste plus qu'un seul civil et qu'il y a au moins 1 undercover
-	if (gameEnd == 0 && nbOfMrWhite >= 1 && nbOfNormal == 1) {
-		infodiv.innerHTML += "Il n'y a plus qu'un civil ! Les mr white gagnent ! "
+	// les imposteurs gagnent si il ne reste plus qu'un seul civil et qu'il y a au moins 1 undercover
+	if (gameEnd == 0 && (nbOfUndercover >= 1 || nbOfMrWhite >= 1) && nbOfNormal == 1) {
+		infodiv.innerHTML += "Il n'y a plus qu'un civil ! Les undercover gagnent 10 points et mr white gagne 6 points ! "
 		gameEnd = 1;
 	}
 
