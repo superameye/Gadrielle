@@ -19,7 +19,7 @@ body {
 #revelationcontainer,
 #playcontainer {
 	background-color: #fff;
-	border-radius: 10px;
+	border-radius: 20px;
 	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 	padding: 1.5em;
 	max-width: 800px;
@@ -42,9 +42,9 @@ button {
 	padding: 0.8em;
 	font-size: 2rem;
 	border: 2px solid #00623e;
-	border-radius: 5px;
+	border-radius: 10px;
 	outline: none;
-	margin-bottom: 2px;
+	margin-bottom: 5px;
 }
 
 input::placeholder {
@@ -87,4 +87,16 @@ p {
 	padding: 0.5em;
 	border-radius: 5px;
 	margin-bottom: 0.5em;
+}
+
+.partyongoingbody {
+	background-color: rgb(244, 161, 79);
+}
+
+.partyoverbody {
+	background-color: rgb(174, 228, 183);
+}
+
+.partyresetbody {
+	background-color: white;
 }

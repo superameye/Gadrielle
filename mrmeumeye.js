@@ -48,7 +48,7 @@ function generateTable() {
 		}
 		else {
 			word = g_synonyme[0];
-			role = "joueur normal";
+			role = "civil";
 		}
 		g_cards[i] = { playername: playername, word: word, role: role, status: "alive" };
 	}
@@ -82,53 +82,53 @@ function updateGame(killedPlayer = "none") {
 
 	if (killedPlayer != "none") { // a player has just been killed
 		let killedCard = g_cards.find(card => card.playername == killedPlayer);
-		infodiv.innerHTML += killedPlayer + " a été éliminé ! Il était " + killedCard.role;
+		infodiv.innerHTML += killedPlayer + " a été éliminé ! Il était " + killedCard.role + ". ";
 		killedCard.status = "dead";
-
+		
 		if (killedCard.role == "mr white") {
 			let tentative = prompt("Il s'agit d'un Mr White ! Il a le droit à une tentative !");
+			// Le mr white qui trouve le mot gagne la partie
 			if (tentative.toLowerCase() == g_synonyme[0].toLowerCase()) {
-				infodiv.innerHTML += " Et mr white a trouvé le mot !";
+				infodiv.innerHTML += "Et mr white a trouvé le mot : " + g_synonyme[0] + ". ";
 				gameEnd = 1;
+				killedCard.status = "alive";
 			} else {
-				infodiv.innerHTML += " Et c'est perdu pour mr white !";
+				infodiv.innerHTML += "Il n'a pas trouvé le mot. ";
 			}
 		}
 	}
 
 	var nbOfUndercover = g_cards.filter(card => card.role == "under cover" && card.status == "alive").length;
 	var nbOfMrWhite = g_cards.filter(card => card.role == "mr white" && card.status == "alive").length;
-	var nbOfNormal = g_cards.filter(card => card.role == "joueur normal" && card.status == "alive").length;
+	var nbOfNormal = g_cards.filter(card => card.role == "civil" && card.status == "alive").length;
 	var nbOfPlayers = g_cards.filter(card => card.status == "alive").length;
 
+	// Guards for wrong game configuration
 	if (gameEnd == 0 && nbOfPlayers == 0) {
-		infodiv.innerHTML += " Il n'y a plus de joueur !";
+		infodiv.innerHTML += "Il n'y a plus de joueur ! ";
 		gameEnd = 1;
 	}
 	if (gameEnd == 0 && nbOfNormal == 0) {
-		infodiv.innerHTML += " Il n'y a plus de joueur normal ! Les under cover ont gagné !";
+		infodiv.innerHTML += "Il n'y a plus de civil ! Les under cover ont gagné ! ";
 		gameEnd = 1;
 	}
 	if (gameEnd == 0 && nbOfMrWhite == 0 && nbOfUndercover == 0) {
-		infodiv.innerHTML += " Il n'y a plus de joueurs spéciaux ! C'est fini !";
+		infodiv.innerHTML += "Il n'y a plus de joueurs spéciaux ! C'est fini ! ";
 		gameEnd = 1;
 	}
-	if (nbOfNormal == 1 && (nbOfMrWhite + nbOfUndercover) == 1) {
-		infodiv.innerHTML += "Il n'y a plus qu'un spécial et un normal ! Les spéciaux gagnent !"
+
+	// Normal rules game ending conditions
+	// les civils gagnent si ils ont éliminé tous les undercover et les mr white
+	if (gameEnd == 0 && nbOfNormal == 1 && (nbOfMrWhite + nbOfUndercover) == 0) {
+		infodiv.innerHTML += "Il n'y a plus aucun undercover ni mr white ! Les civils gagnent ! "
 		gameEnd = 1;
 	}
-	if (nbOfNormal > (nbOfMrWhite + nbOfUndercover)) {
-		infodiv.innerHTML += "Il y a une majorité de normaux ! Les normaux gagnent !"
+	// les undercover gagnent si il ne reste plus qu'un seul civil et qu'il y a au moins 1 undercover
+	if (gameEnd == 0 && nbOfUndercover >= 1 && nbOfNormal == 1) {
+		infodiv.innerHTML += "Il n'y a plus qu'un civil ! Les undercover gagnent ! "
 		gameEnd = 1;
 	}
-	if (nbOfMrWhite > (nbOfNormal + nbOfUndercover)) {
-		infodiv.innerHTML += "Il y a une majorité de mr white ! Les mr white gagnent !"
-		gameEnd = 1;
-	}
-	if (nbOfUndercover > (nbOfNormal + nbOfMrWhite)) {
-		infodiv.innerHTML += "Il y a une majorité de undercover ! Les undercover gagnent !"
-		gameEnd = 1;
-	}
+
 	if (gameEnd == 1) {  // display scores
 		while (resultsdiv.firstChild) {
 			resultsdiv.removeChild(resultsdiv.firstChild);
@@ -139,10 +139,12 @@ function updateGame(killedPlayer = "none") {
 			resultsdiv.appendChild(newElem);
 		}
 		removeDeathButtons();
+		document.body.className = "partyoverbody";
 	} else {
 		removeDeathButtons();
 		createDeathButtons();
-		infodiv.innerHTML += " la partie continue ! Il reste " + nbOfNormal + " normaux, " + nbOfUndercover + " undercover et " + nbOfMrWhite + " mr white.";
+		infodiv.innerHTML += "Il reste " + nbOfNormal + " normaux, " + nbOfUndercover + " undercover et " + nbOfMrWhite + " mr white. ";
+		document.body.className = "partyongoingbody";
 	}
 }
 
@@ -199,6 +201,7 @@ restartbutton.addEventListener('click', function () {
 	initcontainer.style.display = "block";
 	revelationcontainer.style.display = "none";
 	playcontainer.style.display = "none";
+	document.body.className = "partyresetbody";
 })
 
 initcontainer.style.display = "block";
