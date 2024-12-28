@@ -204,6 +204,7 @@ restartbutton.addEventListener('click', function () {
 	document.body.className = "partyresetbody";
 })
 
+document.body.className = "partyresetbody";
 initcontainer.style.display = "block";
 revelationcontainer.style.display = "none";
 playcontainer.style.display = "none";

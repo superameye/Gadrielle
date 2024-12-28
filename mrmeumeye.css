@@ -13,6 +13,23 @@ body {
 	justify-content: center;
 	align-items: center;
 	height: 100vh;
+
+
+
+
+
+	--s: 200px;
+	/* control the size*/
+	--c1: #ffffff;
+	--c2: #ffffff00;
+	--c3: #ececec;
+
+	background:
+		repeating-conic-gradient(from 30deg, #0000 0 120deg, var(--c3) 0 50%) calc(var(--s)/2) calc(var(--s)*tan(30deg)/2),
+		repeating-conic-gradient(from 30deg, var(--c1) 0 60deg, var(--c2) 0 120deg, var(--c3) 0 50%);
+	background-size: var(--s) calc(var(--s)*tan(30deg));
+
+
 }
 
 #initcontainer,
@@ -89,14 +106,47 @@ p {
 	margin-bottom: 0.5em;
 }
 
+
+
 .partyongoingbody {
-	background-color: rgb(244, 161, 79);
+	background-color: rgb(255, 170, 86);
 }
 
 .partyoverbody {
-	background-color: rgb(174, 228, 183);
+	background-color: rgb(109, 255, 133);
 }
 
 .partyresetbody {
-	background-color: white;
+	background-color: rgb(181, 226, 255);
+	animation-name: bgcolors;
+	animation-duration: 10s;
+	animation-direction: alternate-reverse;
+	animation-iteration-count: infinite;
+}
+
+@keyframes bgcolors {
+	0% {
+		background-color: rgb(181, 226, 255);
+	}
+
+	25% {
+		background-color: rgb(199, 255, 232);
+	}
+
+	50% {
+		background-color: rgb(255, 219, 231);
+	}
+
+	100% {
+		background-color: rgb(255, 247, 216);
+	}
+}
+
+logo {
+	font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+	font-size: 8rem;
+	position: absolute;
+	top: 5vh;
+	color: #ffa477;
+	text-decoration: underline;
 }
