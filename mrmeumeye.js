@@ -3,6 +3,7 @@ let g_synonyme;
 let g_cards = []; //index, playername, word, role, status, score: 0
 let g_nbundercovers = 2;
 let g_nbmrwhites = 2;
+let g_mrwhitecanstart = 0;
 let g_actualindex = 0;
 let g_nbofplayers = 0;
 
@@ -27,17 +28,20 @@ function nRandIntBetween(nb, max) {
 	return (res);
 }
 
-function resetPlayers() {
+function resetParty() {
+	g_actualindex = 0;
+
 	for (let g_card of g_cards) {
 		g_card.status = "alive";
 		g_card.word = "";
 		g_card.role = "";
 		// index, name and score are maintained;
 	}
+	showPlayerList()
 }
 
 function generateTable() {
-	resetPlayers();
+	resetParty();
 	console.log("g_nbundercovers = ", g_nbundercovers, "g_nbmrwhites = ", g_nbmrwhites);
 	g_synonyme = g_synonymes[randIntBetween(0, g_synonymes.length)];
 	var specialIndexes = nRandIntBetween(g_nbmrwhites + g_nbundercovers, g_cards.length)
@@ -58,6 +62,33 @@ function generateTable() {
 		}
 	}
 	console.log("Here is the data : ", g_cards);
+}
+
+function showPlayerList() {
+	playerlist.innerHTML = "";
+
+	while (playerlist.firstChild) {
+		playerlist.removeChild(playerlist.firstChild);
+	}
+
+	for (let card of g_cards) {
+		let newElem = document.createElement("p");
+		newElem.innerHTML = card.playername;
+		playerlist.appendChild(newElem);
+	}
+}
+
+function setStartingPlayer() {
+	let listOfPotentialFirstPlayers = [];
+	for (card of g_cards) {
+		if (card.role != "mr white" || g_mrwhitecanstart == 1)
+			listOfPotentialFirstPlayers.push(card.index);
+	}
+	if (listOfPotentialFirstPlayers.length == 0)
+		alert("impossible de trouver un permier joueur ! Réduisez le nombre de mr white.")
+	let firstToPlayIndex = listOfPotentialFirstPlayers[randIntBetween(0, listOfPotentialFirstPlayers.length - 1)];
+	let firstToPlayName = g_cards[firstToPlayIndex].playername;
+	playerdiv.innerHTML = firstToPlayName;
 }
 
 function removeDeathButtons() {
@@ -83,6 +114,17 @@ function addPoints(nb, role) {
 	for (let card of g_cards) {
 		if (card.role == role)
 			card.score += nb;
+	}
+}
+
+function displayScores() {
+	while (resultsdiv.firstChild) {
+		resultsdiv.removeChild(resultsdiv.firstChild);
+	}
+	for (card of g_cards) {
+		let newElem = document.createElement("p");
+		newElem.innerHTML = card.playername + " était " + card.role + " et il est " + card.status + ". Il a " + card.score + " points.";
+		resultsdiv.appendChild(newElem);
 	}
 }
 
@@ -146,14 +188,7 @@ function updateGame(killedPlayer = "none") {
 	}
 
 	if (gameEnd == 1) {  // display scores
-		while (resultsdiv.firstChild) {
-			resultsdiv.removeChild(resultsdiv.firstChild);
-		}
-		for (card of g_cards) {
-			let newElem = document.createElement("p");
-			newElem.innerHTML = card.playername + " était " + card.role + " et il est " + card.status + ". Il a " + card.score + " points.";
-			resultsdiv.appendChild(newElem);
-		}
+		displayScores();
 		removeDeathButtons();
 		document.body.className = "partyoverbody";
 	} else {
@@ -169,7 +204,7 @@ nameinputokbutton.addEventListener('click', function () {
 	if (nameinput.value != "") {
 		g_cards.push({ index: g_nbofplayers, playername: nameinput.value, word: "", role: "", status: "", score: 0 });
 		g_nbofplayers++;
-		playerlist.innerHTML += nameinput.value + ", ";
+		showPlayerList();
 		nameinput.value = "";
 	} else {
 		alert("Vérivier le formulaire !");
@@ -180,6 +215,7 @@ nameinputokbutton.addEventListener('click', function () {
 startbutton.addEventListener('click', function () {
 	g_nbundercovers = Number(nbfalsewordsinput.value);
 	g_nbmrwhites = Number(nbmrwhitesinput.value);
+	g_mrwhitecanstart = mrwhitecanstartinput.checked;
 	generateTable();
 	initcontainer.style.display = "none";
 	revelationcontainer.style.display = "block";
@@ -203,7 +239,7 @@ nextplayerbutton.addEventListener('click', function () {
 		initcontainer.style.display = "none";
 		revelationcontainer.style.display = "none";
 		playcontainer.style.display = "block";
-		playerdiv.innerHTML = g_cards[randIntBetween(0, g_cards.length - 1)].playername;
+		setStartingPlayer();
 		infodiv.innerHTML = "";
 		while (resultsdiv.firstChild) {
 			resultsdiv.removeChild(resultsdiv.firstChild);
@@ -214,13 +250,11 @@ nextplayerbutton.addEventListener('click', function () {
 
 // Restart
 restartbutton.addEventListener('click', function () {
-	g_actualindex = 0;
 	initcontainer.style.display = "block";
 	revelationcontainer.style.display = "none";
 	playcontainer.style.display = "none";
 	document.body.className = "partyresetbody";
-	resetPlayers();
-	playerlist.innerHTML = "";
+	resetParty();
 })
 
 document.body.className = "partyresetbody";

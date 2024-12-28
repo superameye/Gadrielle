@@ -108,14 +108,14 @@ p {
 }
 
 /* Results display */
-#resultsdiv p {
+#resultsdiv p,
+#playerlist p {
 	background-color: #acffdd;
 	padding: 0.5em;
 	border-radius: 5px;
 	margin-bottom: 0.5em;
+	border-radius: 10px;
 }
-
-
 
 .partyongoingbody {
 	background-color: rgb(255, 170, 86);
@@ -159,4 +159,10 @@ logo {
 
 ul {
 	text-align: left;
+}
+
+input[type="checkbox"] {
+	border-radius: 10px;
+	transform: scale(5);
+	width: 100px;
 }
