@@ -55,11 +55,13 @@ function generateTable() {
 	console.log("Here are the cards : ", g_cards);
 }
 
-function createDeathButtons() {
+function removeDeathButtons() {
 	while (eliminationcontainer.firstChild) {
 		eliminationcontainer.removeChild(eliminationcontainer.firstChild);
 	}
+}
 
+function createDeathButtons() {
 	for (let card of g_cards) {
 		if (card.status == "alive") {
 			let newbutton = document.createElement("button");
@@ -76,32 +78,21 @@ function createDeathButtons() {
 // Prompt if an eliminated people was undercover
 function updateGame(killedPlayer = "none") {
 	let gameEnd = 0;
+	infodiv.innerHTML = "";
 
 	if (killedPlayer != "none") { // a player has just been killed
 		let killedCard = g_cards.find(card => card.playername == killedPlayer);
-		infodiv.innerHTML = killedPlayer + " a été éliminé ! Il était " + killedCard.role;
+		infodiv.innerHTML += killedPlayer + " a été éliminé ! Il était " + killedCard.role;
 		killedCard.status = "dead";
+
 		if (killedCard.role == "mr white") {
-			initcontainer.style.display = "none";
-			revelationcontainer.style.display = "none";
-			playcontainer.style.display = "none";
-			tentativecontainer.style.display = "block";
-			tentativeplayerdiv.innerHTML = killedPlayer;
-			tentativeokbutton.addEventListener('click', function () {
-				if (tentativeinput.value.toLowerCase() == g_synonyme[0].toLowerCase()) {
-					infodiv.innerHTML += " Et c'est gagné pour mr white !";
-					initcontainer.style.display = "none";
-					revelationcontainer.style.display = "none";
-					playcontainer.style.display = "block";
-					tentativecontainer.style.display = "none";
-				} else {
-					infodiv.innerHTML += " Et c'est perdu pour mr white !";
-					initcontainer.style.display = "none";
-					revelationcontainer.style.display = "none";
-					playcontainer.style.display = "block";
-					tentativecontainer.style.display = "none";
-				}
-			})
+			let tentative = prompt("Il s'agit d'un Mr White ! Il a le droit à une tentative !");
+			if (tentative.toLowerCase() == g_synonyme[0].toLowerCase()) {
+				infodiv.innerHTML += " Et c'est gagné pour mr white !";
+				gameEnd = 1;
+			} else {
+				infodiv.innerHTML += " Et c'est perdu pour mr white !";
+			}
 		}
 	}
 
@@ -110,20 +101,20 @@ function updateGame(killedPlayer = "none") {
 	var nbOfNormal = g_cards.filter(card => card.role == "joueur normal" && card.status == "alive").length;
 	var nbOfPlayers = g_cards.filter(card => card.status == "alive").length;
 
-	if (nbOfPlayers == 0) {
-		infodiv.innerHTML = "Il n'y a plus de joueur !";
+	if (gameEnd == 0 && nbOfPlayers == 0) {
+		infodiv.innerHTML += " Il n'y a plus de joueur !";
 		gameEnd = 1;
 	}
-	if (nbOfNormal == 0) {
-		infodiv.innerHTML = "Il n'y a plus de joueur normal ! Les under cover ont gagné !";
+	if (gameEnd == 0 && nbOfNormal == 0) {
+		infodiv.innerHTML += " Il n'y a plus de joueur normal ! Les under cover ont gagné !";
 		gameEnd = 1;
 	}
-	if (nbOfPlayers <= 2) {
-		infodiv.innerHTML = "Il n'y a plus que 2 joueurs ! C'est les spéciaux qui gagnent !";
+	if (gameEnd == 0 && nbOfMrWhite == 0 && nbOfUndercover == 0) {
+		infodiv.innerHTML += " Il n'y a plus de joueurs spéciaux ! C'est fini !";
 		gameEnd = 1;
 	}
-	if (nbOfMrWhite == 0 && nbOfUndercover == 0) {
-		infodiv.innerHTML = "Il n'y a plus de joueurs spéciaux ! C'est fini !";
+	if (nbOfNormal == 1 && (nbOfMrWhite + nbOfUndercover) == 1) {
+		infodiv.innerHTML += "Il n'y a plus qu'un spécial et un normal ! Les spéciaux gagnent !"
 		gameEnd = 1;
 	}
 	if (gameEnd == 1) {  // display scores
@@ -135,9 +126,12 @@ function updateGame(killedPlayer = "none") {
 			newElem.innerHTML = card.playername + " était " + card.role + " et il est " + card.status;
 			resultsdiv.appendChild(newElem);
 		}
+		removeDeathButtons();
+	} else {
+		removeDeathButtons();
+		createDeathButtons();
+		infodiv.innerHTML += " la partie continue !";
 	}
-	createDeathButtons();
-
 }
 
 // Get the names of players
@@ -178,7 +172,6 @@ nextplayerbutton.addEventListener('click', function () {
 		initcontainer.style.display = "none";
 		revelationcontainer.style.display = "none";
 		playcontainer.style.display = "block";
-		tentativecontainer.style.display = "none";
 		playerdiv.innerHTML = g_cards[0].playername;
 		infodiv.innerHTML = "";
 		while (resultsdiv.firstChild) {
@@ -194,11 +187,9 @@ restartbutton.addEventListener('click', function () {
 	initcontainer.style.display = "block";
 	revelationcontainer.style.display = "none";
 	playcontainer.style.display = "none";
-	tentativecontainer.style.display = "none";
 })
 
 initcontainer.style.display = "block";
 revelationcontainer.style.display = "none";
 playcontainer.style.display = "none";
-tentativecontainer.style.display = "none";
 
