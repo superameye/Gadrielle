@@ -15,7 +15,7 @@ function nRandIntBetween(nb, max) {
 	console.log("nRandIntBetween is going no generate ", nb, "nb from 0 to ", max);
 	var res = [];
 	if (nb > max) {
-		alert("You are trying to generate ", nb, " differents ints in a range from 0 to ", max, " !");
+		alert("Mauvais paramétrage !");
 		return res;
 	}
 	while (res.length < nb) {
@@ -155,7 +155,7 @@ nameinputokbutton.addEventListener('click', function () {
 		playerlist.innerHTML = g_playerlist;
 		nameinput.value = "";
 	} else {
-		alert("Vérivier l'input");
+		alert("Vérivier le formulaire !");
 	}
 })
 
