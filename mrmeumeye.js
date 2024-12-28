@@ -128,6 +128,11 @@ function updateGame(killedPlayer = "none") {
 		infodiv.innerHTML += "Il n'y a plus qu'un civil ! Les undercover gagnent ! "
 		gameEnd = 1;
 	}
+	// les undercover gagnent si il ne reste plus qu'un seul civil et qu'il y a au moins 1 undercover
+	if (gameEnd == 0 && nbOfMrWhite >= 1 && nbOfNormal == 1) {
+		infodiv.innerHTML += "Il n'y a plus qu'un civil ! Les mr white gagnent ! "
+		gameEnd = 1;
+	}
 
 	if (gameEnd == 1) {  // display scores
 		while (resultsdiv.firstChild) {
