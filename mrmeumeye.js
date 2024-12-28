@@ -166,15 +166,14 @@ function updateGame(killedPlayer = "none") {
 
 // Get the names of players
 nameinputokbutton.addEventListener('click', function () {
-	// if (nameinput.value != "" && !(g_playerlist.includes(nameinput.value))) {
-	// g_playerlist.push(nameinput.value);
-	g_cards.push({ index: g_nbofplayers, playername: nameinput.value, word: "", role: "", status: "", score: 0 });
-	g_nbofplayers++;
-	playerlist.innerHTML += nameinput.value + ", ";
-	nameinput.value = "";
-	// } else {
-	// 	alert("Vérivier le formulaire !");
-	// }
+	if (nameinput.value != "") {
+		g_cards.push({ index: g_nbofplayers, playername: nameinput.value, word: "", role: "", status: "", score: 0 });
+		g_nbofplayers++;
+		playerlist.innerHTML += nameinput.value + ", ";
+		nameinput.value = "";
+	} else {
+		alert("Vérivier le formulaire !");
+	}
 })
 
 // Show the cards ! Set vars and get the various randoms first
