@@ -12,8 +12,7 @@ body {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	min-height: 100vh;
-	padding: 1em;
+	height: 100vh;
 }
 
 #initcontainer,
@@ -23,7 +22,7 @@ body {
 	border-radius: 10px;
 	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 	padding: 1.5em;
-	max-width: 600px;
+	max-width: 800px;
 	width: 100%;
 	text-align: center;
 }
@@ -41,7 +40,7 @@ button {
 	width: 90%;
 	max-width: 400px;
 	padding: 0.8em;
-	font-size: 1rem;
+	font-size: 2rem;
 	border: 2px solid #00623e;
 	border-radius: 5px;
 	outline: none;
@@ -69,16 +68,16 @@ p {
 }
 
 h1 {
-	font-size: 1.5rem;
+	font-size: 3rem;
 	color: #00623e;
 }
 
 h2 {
-	font-size: 1.2rem;
+	font-size: 2.4rem;
 }
 
 p {
-	font-size: 1rem;
+	font-size: 2rem;
 }
 
 /* Results display */
