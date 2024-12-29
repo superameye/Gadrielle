@@ -232,14 +232,17 @@ function refreshHome() {
 	showPlayerList();
 	console.log("here is the actual data : ");
 	console.log(getData());
+	detectOngoingParty();
 }
 
 function detectOngoingParty() {
 	let playData = getData();
 
-	if (playData[0].word != "")
-		alert("Il semble qu'il y ait une partie en cours !");
+	console.log("playData[0].word");
+	playongoingdiv.style.display = "none";
+	if (playData.length > 0)
+		if (typeof playData[0].word !== 'undefined')
+			playongoingdiv.style.display = "block";
 }
 
 refreshHome();
-detectOngoingParty();

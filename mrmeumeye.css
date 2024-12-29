@@ -35,6 +35,11 @@ body {
 	text-align: center;
 }
 
+#playongoingdiv {
+	border-radius: 20px;
+	background-color: #ffc663;
+}
+
 .hflexbox {
 	display: flex;
 	flex-direction: row;

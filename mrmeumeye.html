@@ -49,13 +49,11 @@
 				<h2>En case de victoire, les Civils marquent tous 2 points, Mr.White, 6 points et l’Undercover, 10
 					points !</h2>
 			</details>
-			<h1>Paramètres de la partie</h1>
-			<h2>Ajouter un joueur</h2>
+			<h1>Ajouter des joueurs</h1>
 			<input id="nameinput" placeholder="Nom du joueur">
 			<button id="nameinputokbutton" type=submit>Ajouter</button>
-			<h2>Liste des joueurs : </h2>
 			<div class="vflexbox" id="playerlistdiv"></div>
-			<h2>Définir les options de jeu</h2>
+			<h1>Options de jeu</h1>
 			<input id="nbfalsewordsinput" type="number" placeholder="nombre de undercover">
 			<input id="nbmrwhitesinput" type="number" placeholder="nombre de mr white">
 			<div class="vflexbox">
@@ -64,12 +62,12 @@
 					<input type="checkbox" id="mrwhitecanstartinput">
 				</div>
 			</div>
-			<h2>Cliquez pour démarrer la partie !</h2>
 			<button id="startbutton">Demarrer</button>
-			<h2>Reprendre la partie</h2>
-			<button id="recoverbutton">Reprendre</button>
-			<h2>Cliquez pour réinitialiser les parties en cours !</h2>
-			<button id="resetbutton">Réinitialiser</button>
+			<div id="playongoingdiv" class="vflexbox">
+				<h1>Il semble qu'une partie soit en cours !</h1>
+				<button id="recoverbutton">Reprendre</button>
+				<button id="resetbutton">Réinitialiser</button>
+			</div>
 		</div>
 	</div>
 	<div id="revelationcontainer">
