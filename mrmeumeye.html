@@ -10,7 +10,7 @@
 <body>
 	<div id="initcontainer">
 		<logo>Mr Meumeye !</logo>
-		<div class="hflexbox">
+		<div class="vflexbox">
 			<details>
 				<summary>
 					Règles
@@ -49,66 +49,57 @@
 				<h2>En case de victoire, les Civils marquent tous 2 points, Mr.White, 6 points et l’Undercover, 10
 					points !</h2>
 			</details>
-		</div>
-		<h1>Paramètres de la partie</h1>
-		<div class="hflexbox">
+			<h1>Paramètres de la partie</h1>
 			<h2>Ajouter un joueur</h2>
 			<input id="nameinput" placeholder="Nom du joueur">
 			<button id="nameinputokbutton" type=submit>Ajouter</button>
-		</div>
-		<div class="hflexbox">
 			<h2>Liste des joueurs : </h2>
-			<p id="playerlist"></p>
-		</div>
-		<div class="hflexbox">
+			<div class="vflexbox" id="playerlistdiv"></div>
 			<h2>Définir les options de jeu</h2>
 			<input id="nbfalsewordsinput" type="number" placeholder="nombre de undercover">
 			<input id="nbmrwhitesinput" type="number" placeholder="nombre de mr white">
-			<p>Mr White peut commencer :</p>
-			<input type="checkbox" id="mrwhitecanstartinput">
-		</div>
-		<div class="hflexbox">
+			<div class="vflexbox">
+				<div class="hflexbox">
+					<h2>Mr White peut commencer :</h2>
+					<input type="checkbox" id="mrwhitecanstartinput">
+				</div>
+			</div>
 			<h2>Cliquez pour démarrer la partie !</h2>
 			<button id="startbutton">Demarrer</button>
+			<h2>Reprendre la partie</h2>
+			<button id="recoverbutton">Reprendre</button>
+			<h2>Cliquez pour réinitialiser les parties en cours !</h2>
+			<button id="resetbutton">Réinitialiser</button>
 		</div>
 	</div>
 	<div id="revelationcontainer">
-		<h1>Faites passer le téléphone !</h1>
-		<div class="hflexbox">
+		<div class="vflexbox">
+			<h1>Faites passer le téléphone !</h1>
 			<h2> Joueur actuel : </h2>
 			<p id="actualnamediv"></p>
-		</div>
-		<div class="hflexbox">
 			<h2> Mot : </h2>
-			<p id="actualworddiv"></p>
-		</div>
-		<div class="hflexbox">
+			<textinbox id="actualworddiv"></textinbox>
 			<button id="revealbutton">révéler</button>
 			<button id="nextplayerbutton">joueur suivant</button>
 		</div>
-
 	</div>
 	<div id="playcontainer">
-		<h1>Let's jouer !</h1>
-		<div class="hflexbox">
+		<div class="vflexbox">
+			<h1>Let's jouer !</h1>
 			<h2>Joueur qui commence : </h2>
-			<p id="playerdiv"></p>
-		</div>
-		<div class="hflexbox">
+			<textinbox id="playerdiv"></textinbox>
 			<h2>Eliminer un joueur !</h2>
 			<div id="eliminationcontainer"></div>
-			<div class="hflexbox">
+			<div class="vflexbox">
 				<p id="infodiv"></p>
 			</div>
-		</div>
-		<div class="hflexbox">
-			<p id="resultsdiv"></p>
-		</div>
-		<div class="hflexbox">
-			<button id="restartbutton">Redémarrer la partie</button>
+			<div class="vflexbox" id="resultsdiv"></div>
+			<button id="restartbutton">Retour à l'accueil</button>
 		</div>
 	</div>
 
+	<script src="mrmeumeye_utils.js"></script>
+	<script src="mrmeumeye_buttons.js"></script>
 	<script src="mrmeumeye.js"></script>
 	<script src="synonymes.js"></script>
 </body>

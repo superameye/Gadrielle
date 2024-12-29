@@ -1,11 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Caprasimo&family=Rubik+Vinyl&family=VT323&display=swap');
 
-/* General reset and responsive setup */
-* {
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
-}
 
 body {
 	font-family: 'Arial', sans-serif;
@@ -15,10 +9,6 @@ body {
 	justify-content: center;
 	align-items: center;
 	min-height: 100vh;
-
-
-
-
 
 	--s: 200px;
 	/* control the size*/
@@ -30,7 +20,6 @@ body {
 		repeating-conic-gradient(from 30deg, #0000 0 120deg, var(--c3) 0 50%) calc(var(--s)/2) calc(var(--s)*tan(30deg)/2),
 		repeating-conic-gradient(from 30deg, var(--c1) 0 60deg, var(--c2) 0 120deg, var(--c3) 0 50%);
 	background-size: var(--s) calc(var(--s)*tan(30deg));
-
 
 }
 
@@ -47,6 +36,14 @@ body {
 }
 
 .hflexbox {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	gap: 1em;
+	margin-bottom: 1.5em;
+}
+
+.vflexbox {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -86,7 +83,8 @@ h2,
 p,
 input,
 button,
-summary {
+summary,
+textinbox {
 	margin-bottom: 0.8em;
 	font-family: "VT323", serif;
 	overflow-wrap: anywhere;
@@ -103,22 +101,23 @@ h2 {
 }
 
 p {
-	font-size: 3.6rem;
-	color: #ff9966;
+	font-size: 4.5rem;
+	color: #e28f00;
 }
 
 /* Results display */
-#resultsdiv p,
-#playerlist p {
-	background-color: #acffdd;
+textinbox {
+	background-color: #ffc663;
 	padding: 0.5em;
 	border-radius: 5px;
 	margin-bottom: 0.5em;
 	border-radius: 10px;
+	font-size: 3.6rem;
+	color: #000000;
 }
 
 .partyongoingbody {
-	background-color: rgb(255, 170, 86);
+	background-color: rffc663;
 }
 
 .partyoverbody {
