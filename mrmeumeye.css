@@ -9,18 +9,8 @@ body {
 	justify-content: center;
 	align-items: center;
 	min-height: 100vh;
-
-	--s: 200px;
-	/* control the size*/
-	--c1: #ffffff;
-	--c2: #ffffff00;
-	--c3: #ececec;
-
-	background:
-		repeating-conic-gradient(from 30deg, #0000 0 120deg, var(--c3) 0 50%) calc(var(--s)/2) calc(var(--s)*tan(30deg)/2),
-		repeating-conic-gradient(from 30deg, var(--c1) 0 60deg, var(--c2) 0 120deg, var(--c3) 0 50%);
-	background-size: var(--s) calc(var(--s)*tan(30deg));
-
+	padding-top: 3em;
+	padding-bottom: 3em;
 }
 
 #initcontainer,
@@ -37,7 +27,7 @@ body {
 
 #playongoingdiv {
 	border-radius: 20px;
-	background-color: #ffc663;
+	background-color: #ffda99;
 }
 
 .hflexbox {
@@ -113,7 +103,7 @@ p {
 
 /* Results display */
 textinbox {
-	background-color: #ffc663;
+	background-color: #ffda99;
 	padding: 0.5em;
 	border-radius: 5px;
 	margin-bottom: 0.5em;
