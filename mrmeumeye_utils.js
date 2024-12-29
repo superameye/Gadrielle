@@ -1,10 +1,10 @@
 
-function setData(playData) {
-	localStorage.setItem('playData', JSON.stringify(playData));
+function setData(playersData) {
+	localStorage.setItem('playersData', JSON.stringify(playersData));
 }
 
 function getData() {
-	return JSON.parse(localStorage.getItem('playData'));
+	return JSON.parse(localStorage.getItem('playersData'));
 }
 
 function setSynonyme(synonyme) {
@@ -41,17 +41,17 @@ function resetData() {
 
 function resetParty() {
 	console.log("resetParty");
-	let playData = getData();
+	let playersData = getData();
 	g_actualindex = 0;
 
-	for (card of playData) {
-		card.status = "alive";
-		card.word = "";
-		card.role = "";
-		card.isfirst = 0;
+	for (playerData of playersData) {
+		playerData.status = "vivant";
+		playerData.word = "";
+		playerData.role = "";
+		playerData.isfirst = 0;
 		// index, name and score are maintained;
 	}
-	setData(playData);
+	setData(playersData);
 	console.log("playdata after resetParty : ");
 	console.log(getData());
 	showPlayerList()

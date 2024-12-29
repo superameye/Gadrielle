@@ -8,16 +8,16 @@ resetbutton.addEventListener('click', function () {
 
 // Add a player
 nameinputokbutton.addEventListener('click', function () {
-	let playData = getData();
+	let playersData = getData();
 	if (nameinput.value != "") {
 		let newPlayerIndex;
-		if (playData.length == 0) {
+		if (playersData.length == 0) {
 			newPlayerIndex = 0;
 		} else {
-			newPlayerIndex = playData[playData.length - 1].index + 1;
+			newPlayerIndex = playersData[playersData.length - 1].index + 1;
 		}
-		playData.push({ index: newPlayerIndex, playername: nameinput.value, score: 0 });
-		setData(playData);
+		playersData.push({ index: newPlayerIndex, playername: nameinput.value, score: 0 });
+		setData(playersData);
 		showPlayerList();
 		nameinput.value = "";
 	} else {
@@ -30,22 +30,22 @@ startbutton.addEventListener('click', function () {
 	let nbundercovers = Number(nbfalsewordsinput.value);
 	let nbmrwhites = Number(nbmrwhitesinput.value);
 	let mrwhitecanstart = mrwhitecanstartinput.checked;
-	generateTable(nbundercovers, nbmrwhites, mrwhitecanstart);
+	fillPlayersData(nbundercovers, nbmrwhites, mrwhitecanstart);
 	refreshReveal();
 })
 
 // Reveal the word
 revealbutton.addEventListener('click', function () {
-	let playData = getData();
-	actualworddiv.innerHTML = playData[g_actualindex].word;
+	let playersData = getData();
+	actualworddiv.innerHTML = playersData[g_actualindex].word;
 })
 
-// Show the next card, except is the card show is over !
+// Show the next playerData, except is the playerData show is over !
 nextplayerbutton.addEventListener('click', function () {
-	let playData = getData();
-	if (g_actualindex < playData.length - 1) {
+	let playersData = getData();
+	if (g_actualindex < playersData.length - 1) {
 		g_actualindex++;
-		actualnamediv.innerHTML = "joueur : " + playData[g_actualindex].playername;
+		actualnamediv.innerHTML = "joueur : " + playersData[g_actualindex].playername;
 		actualworddiv.innerHTML = "clique sur révéler pour révéler";
 	} else {  // let's play !
 		refreshGame();

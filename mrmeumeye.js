@@ -1,64 +1,64 @@
 let g_synonymes;
 let g_actualindex = 0;
 
-function generateTable(nbundercovers = 0, nbmrwhites = 0, mrwhitecanstart = 0) {
-	console.log("generateTable");
+function fillPlayersData(nbundercovers = 0, nbmrwhites = 0, mrwhitecanstart = 0) {
+	console.log("fillPlayersData");
 	// Reset table and get reseted table
 	resetParty();
-	let playData = getData();
-	console.log("generate table : Here is the input data : ", playData);
+	let playersData = getData();
+	console.log("generate table : Here is the input data : ", playersData);
 	console.log("g_nbundercovers = ", nbundercovers, "nbmrwhites = ", nbmrwhites);
 
 	// Chose and store a synonyme
 	setSynonyme(g_synonymes[randIntBetween(0, g_synonymes.length)]);
 
 	// Give roles
-	var specialIndexes = nRandIntBetween(nbmrwhites + nbundercovers, playData.length)
+	var specialIndexes = nRandIntBetween(nbmrwhites + nbundercovers, playersData.length)
 	var mrWhiteIndexes = specialIndexes.slice(0, nbmrwhites);  //indexes zero to g_nbmrwhites - 1
 	var mrFalseWordsIndexes = specialIndexes.slice(nbmrwhites);  //indexes g_nbmrwhites to end
-	for (let card of playData) {
-		if (mrWhiteIndexes.includes(card.index)) {
-			card.word = "Tu es mr white !";
-			card.role = "mr white";
+	for (let playerData of playersData) {
+		if (mrWhiteIndexes.includes(playerData.index)) {
+			playerData.word = "Tu es mr white !";
+			playerData.role = "mr white";
 		}
-		else if (mrFalseWordsIndexes.includes(card.index)) {
-			card.word = getSynonyme()[1];
-			card.role = "under cover";
+		else if (mrFalseWordsIndexes.includes(playerData.index)) {
+			playerData.word = getSynonyme()[1];
+			playerData.role = "under cover";
 		}
 		else {
-			card.word = getSynonyme()[0];
-			card.role = "civil";
+			playerData.word = getSynonyme()[0];
+			playerData.role = "civil";
 		}
 	}
 
 	// Set starting player
 	console.log("setStartingPlayer");
 	let listOfPotentialFirstPlayers = [];
-	for (card of playData) {
-		if (card.role != "mr white" || mrwhitecanstart == 1)
-			listOfPotentialFirstPlayers.push(card.index);
+	for (playerData of playersData) {
+		if (playerData.role != "mr white" || mrwhitecanstart == 1)
+			listOfPotentialFirstPlayers.push(playerData.index);
 	}
 	if (listOfPotentialFirstPlayers.length == 0)
 		alert("impossible de trouver un permier joueur ! Réduisez le nombre de mr white.")
 	let firstToPlayIndex = listOfPotentialFirstPlayers[randIntBetween(0, listOfPotentialFirstPlayers.length - 1)];
-	playData[firstToPlayIndex].isfirst = 1;
+	playersData[firstToPlayIndex].isfirst = 1;
 
-	console.log("generate table : Here is the output data : ", playData);
-	setData(playData);
+	console.log("generate table : Here is the output data : ", playersData);
+	setData(playersData);
 }
 
 function showPlayerList() {
 	console.log("showPlayerList");
-	let playData = getData();
+	let playersData = getData();
 	playerlistdiv.innerHTML = "";
 
 	while (playerlistdiv.firstChild) {
 		playerlistdiv.removeChild(playerlistdiv.firstChild);
 	}
 
-	for (let card of playData) {
+	for (let playerData of playersData) {
 		let newElem = document.createElement("textinbox");
-		newElem.innerHTML = card.playername + " " + card.score + " points";
+		newElem.innerHTML = playerData.playername + " (" + playerData.score + " points)";
 		playerlistdiv.appendChild(newElem);
 	}
 }
@@ -72,11 +72,11 @@ function removeDeathButtons() {
 
 function createDeathButtons() {
 	console.log("createDeathButtons");
-	let playData = getData();
-	for (let card of playData) {
-		if (card.status == "alive") {
+	let playersData = getData();
+	for (let playerData of playersData) {
+		if (playerData.status == "vivant") {
 			let newbutton = document.createElement("button");
-			newbutton.innerHTML = card.playername;
+			newbutton.innerHTML = playerData.playername;
 			newbutton.addEventListener('click', function () {
 				updateGame(this.innerHTML);  // The button will send his value to update function
 			})
@@ -87,23 +87,23 @@ function createDeathButtons() {
 
 function addPoints(nb, role) {
 	console.log("addPoints");
-	let playData = getData();
-	for (let card of playData) {
-		if (card.role == role)
-			card.score += nb;
+	let playersData = getData();
+	for (let playerData of playersData) {
+		if (playerData.role == role)
+			playerData.score += nb;
 	}
-	setData(playData);
+	setData(playersData);
 }
 
 function displayScores() {
 	console.log("displayScores");
-	let playData = getData();
+	let playersData = getData();
 	while (resultsdiv.firstChild) {
 		resultsdiv.removeChild(resultsdiv.firstChild);
 	}
-	for (card of playData) {
+	for (playerData of playersData) {
 		let newElem = document.createElement("textinbox");
-		newElem.innerHTML = card.playername + " était " + card.role + " et il est " + card.status + ". Il a " + card.score + " points.";
+		newElem.innerHTML = playerData.playername + " était " + playerData.role + " et il est " + playerData.status + ". Il a " + playerData.score + " points.";
 		resultsdiv.appendChild(newElem);
 	}
 }
@@ -112,15 +112,15 @@ function displayScores() {
 // Prompt if an eliminated people was undercover
 function updateGame(killedPlayer = "none") {
 	console.log("updateGame with data");
-	let playData = getData();
-	console.log(playData);
+	let playersData = getData();
+	console.log(playersData);
 	let gameEnd = 0;
 	infodiv.innerHTML = "";
 
 	if (killedPlayer != "none") { // a player has just been killed
-		let killedCard = playData.find(card => card.playername == killedPlayer);
+		let killedCard = playersData.find(playerData => playerData.playername == killedPlayer);
 		infodiv.innerHTML += killedPlayer + " a été éliminé ! Il était " + killedCard.role + ". ";
-		killedCard.status = "dead";
+		killedCard.status = "mort";
 
 		if (killedCard.role == "mr white") {
 			let tentative = prompt("Il s'agit d'un Mr White ! Il a le droit à une tentative !");
@@ -128,7 +128,7 @@ function updateGame(killedPlayer = "none") {
 			if (tentative.toLowerCase() == getSynonyme()[0].toLowerCase()) {
 				infodiv.innerHTML += "Et mr white a trouvé le mot : " + getSynonyme()[0] + ". Il gagne 6 points ! ";
 				gameEnd = 1;
-				killedCard.status = "alive";
+				killedCard.status = "vivant";
 				killedCard.score += 6;
 			} else {
 				infodiv.innerHTML += "Il n'a pas trouvé le mot. ";
@@ -136,24 +136,24 @@ function updateGame(killedPlayer = "none") {
 		}
 	}
 
-	setData(playData);
+	setData(playersData);
 
-	var nbOfUndercover = playData.filter(card => card.role == "under cover" && card.status == "alive").length;
-	var nbOfMrWhite = playData.filter(card => card.role == "mr white" && card.status == "alive").length;
-	var nbOfNormal = playData.filter(card => card.role == "civil" && card.status == "alive").length;
-	var nbOfPlayers = playData.filter(card => card.status == "alive").length;
+	var nbOfUndercover = playersData.filter(playerData => playerData.role == "under cover" && playerData.status == "vivant").length;
+	var nbOfMrWhite = playersData.filter(playerData => playerData.role == "mr white" && playerData.status == "vivant").length;
+	var nbOfCivils = playersData.filter(playerData => playerData.role == "civil" && playerData.status == "vivant").length;
+	var nbOfPlayers = playersData.filter(playerData => playerData.status == "vivant").length;
 
-	console.log("nbOfUndercover " + nbOfUndercover + " nbOfMrWhite " + nbOfMrWhite + " nbOfNormal " + nbOfNormal + " nbOfPlayers " + nbOfPlayers);
+	console.log("nbOfUndercover " + nbOfUndercover + " nbOfMrWhite " + nbOfMrWhite + " nbOfCivils " + nbOfCivils + " nbOfPlayers " + nbOfPlayers);
 
 	// Normal rules game ending conditions
 	// les civils gagnent si ils ont éliminé tous les undercover et les mr white
-	if (gameEnd == 0 && nbOfNormal >= 1 && (nbOfMrWhite + nbOfUndercover) == 0) {
+	if (gameEnd == 0 && nbOfCivils >= 1 && (nbOfMrWhite + nbOfUndercover) == 0) {
 		infodiv.innerHTML += "Il n'y a plus aucun undercover ni mr white ! Les civils gagnent 2 points ! "
 		gameEnd = 1;
 		addPoints(2, "civil");
 	}
 	// les imposteurs gagnent si il ne reste plus qu'un seul civil et qu'il y a au moins 1 undercover
-	if (gameEnd == 0 && (nbOfUndercover >= 1 || nbOfMrWhite >= 1) && nbOfNormal == 1) {
+	if (gameEnd == 0 && (nbOfUndercover >= 1 || nbOfMrWhite >= 1) && nbOfCivils == 1) {
 		infodiv.innerHTML += "Il n'y a plus qu'un civil ! Les undercover gagnent 10 points et mr white gagne 6 points ! "
 		gameEnd = 1;
 		addPoints(10, "under cover");
@@ -161,7 +161,7 @@ function updateGame(killedPlayer = "none") {
 	}
 
 	// Guards for wrong game configuration
-	if (gameEnd == 0 && nbOfPlayers == nbOfNormal) {
+	if (gameEnd == 0 && nbOfPlayers == nbOfCivils) {
 		infodiv.innerHTML += "Bizarre : Il n'y a QUE des civils ! ";
 		gameEnd = 1;
 	}
@@ -169,7 +169,7 @@ function updateGame(killedPlayer = "none") {
 		infodiv.innerHTML += "Bizarre : Il n'y a plus de joueur ! ";
 		gameEnd = 1;
 	}
-	if (gameEnd == 0 && nbOfNormal == 0) {
+	if (gameEnd == 0 && nbOfCivils == 0) {
 		infodiv.innerHTML += "Bizarre : Il n'y a plus de civil ! Les under cover ont gagné ! ";
 		gameEnd = 1;
 	}
@@ -185,28 +185,28 @@ function updateGame(killedPlayer = "none") {
 	} else {
 		removeDeathButtons();
 		createDeathButtons();
-		infodiv.innerHTML += "Il reste " + nbOfNormal + " normaux, " + nbOfUndercover + " undercover et " + nbOfMrWhite + " mr white. ";
+		infodiv.innerHTML += "Il reste " + nbOfCivils + " normaux, " + nbOfUndercover + " undercover et " + nbOfMrWhite + " mr white. ";
 		document.body.className = "partyongoingbody";
 	}
-}
-
-function refreshReveal() {
-	let playData = getData();
-	initcontainer.style.display = "none";
-	revelationcontainer.style.display = "block";
-	playcontainer.style.display = "none";
-	g_actualindex = 0;
-	actualnamediv.innerHTML = playData[0].playername;
-	actualworddiv.innerHTML = "clique sur révéler pour révéler";
 }
 
 function showStartingPlayer() {
 	playerdiv.innerHTML = "";
 	let playerData = getData();
-	for (card of playerData) {
-		if (card.isfirst == 1)
-			playerdiv.innerHTML = card.playername;
+	for (playerData of playerData) {
+		if (playerData.isfirst == 1)
+			playerdiv.innerHTML = playerData.playername;
 	}
+}
+
+function refreshReveal() {
+	let playersData = getData();
+	initcontainer.style.display = "none";
+	revelationcontainer.style.display = "block";
+	playcontainer.style.display = "none";
+	g_actualindex = 0;
+	actualnamediv.innerHTML = playersData[0].playername;
+	actualworddiv.innerHTML = "clique sur révéler pour révéler";
 }
 
 function refreshGame() {
@@ -236,12 +236,12 @@ function refreshHome() {
 }
 
 function detectOngoingParty() {
-	let playData = getData();
+	let playersData = getData();
 
-	console.log("playData[0].word");
+	console.log("playersData[0].word");
 	playongoingdiv.style.display = "none";
-	if (playData.length > 0)
-		if (typeof playData[0].word !== 'undefined')
+	if (playersData.length > 0)
+		if (typeof playersData[0].word !== 'undefined')
 			playongoingdiv.style.display = "block";
 }
 
