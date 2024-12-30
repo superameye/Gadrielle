@@ -9,7 +9,9 @@ resetbutton.addEventListener('click', function () {
 // Add a player
 nameinputokbutton.addEventListener('click', function () {
 	let playersData = getData();
-	if (nameinput.value != "") {
+	if (nameinput.value == "") {
+		alert("Vérivier le formulaire !");
+	} else {
 		let newPlayerIndex;
 		if (playersData.length == 0) {
 			newPlayerIndex = 0;
@@ -20,8 +22,6 @@ nameinputokbutton.addEventListener('click', function () {
 		setData(playersData);
 		showPlayerList();
 		nameinput.value = "";
-	} else {
-		alert("Vérivier le formulaire !");
 	}
 })
 
@@ -30,6 +30,19 @@ startbutton.addEventListener('click', function () {
 	let nbundercovers = Number(nbfalsewordsinput.value);
 	let nbmrwhites = Number(nbmrwhitesinput.value);
 	let mrwhitecanstart = mrwhitecanstartinput.checked;
+	let nbjoueurs = getData().length;
+	if (nbjoueurs < 4) {
+		alert("Il doit y avoir au moins 4 joueurs, lis la règle enculé");
+		return;
+	}
+	if (nbjoueurs - nbmrwhites - nbundercovers < 2) {
+		alert("Il doit y avoir au moins 2 civils, lis la règle enculé");
+		return;
+	}
+	if (nbmrwhites + nbundercovers < 1) {
+		alert("Il doit y avoir au moins 1 undercover ou mr white, t'es con ou t'en fais exprès ??");
+		return;
+	}
 	fillPlayersData(nbundercovers, nbmrwhites, mrwhitecanstart);
 	refreshReveal();
 })
