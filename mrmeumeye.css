@@ -151,10 +151,10 @@ superlogo {
 	position: relative;
 	/* white-space: pre; */
 	white-space: pre-wrap;
-	width: 103ch;
+	width: 105ch;
 	font-size: 1.3rem;
 	font-weight: bolder;
-	animation: 11s linear 0s infinite running traintranslate;
+	animation: 6s linear 0s infinite running traintranslate;
 	padding-top: 10vw;
 	line-break: anywhere;
 	letter-spacing: 0px;
