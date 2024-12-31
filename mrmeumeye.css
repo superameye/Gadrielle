@@ -25,6 +25,8 @@ body {
 	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 	width: 95%;
 	margin: 0vw;
+	margin-top: 1em;
+	margin-bottom: 1em;
 	padding: 0;
 	text-align: center;
 	overflow-x: hidden;
