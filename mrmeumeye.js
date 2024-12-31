@@ -199,6 +199,11 @@ function showStartingPlayer() {
 	}
 }
 
+function refreshLogo() {
+	superlogodiv.innerHTML = g_logo;
+	console.log("g_logo");
+}
+
 function refreshReveal() {
 	let playersData = getData();
 	initcontainer.style.display = "none";
@@ -229,6 +234,7 @@ function refreshHome() {
 	initcontainer.style.display = "block";
 	revelationcontainer.style.display = "none";
 	playcontainer.style.display = "none";
+	refreshLogo();
 	showPlayerList();
 	console.log("here is the actual data : ");
 	console.log(getData());

@@ -9,8 +9,12 @@ body {
 	justify-content: center;
 	align-items: center;
 	min-height: 100vh;
-	padding-top: 3em;
-	padding-bottom: 3em;
+	/* padding-top: 3em;
+	padding-bottom: 3em; */
+	margin: 0;
+	padding: 0;
+	width: 100vw;
+	/* pointer-events: none; */
 }
 
 #initcontainer,
@@ -19,10 +23,11 @@ body {
 	background-color: #fff;
 	border-radius: 20px;
 	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-	padding: 1.5em;
-	max-width: 800px;
-	width: 100%;
+	width: 95%;
+	margin: 0vw;
+	padding: 0;
 	text-align: center;
+	overflow-x: hidden;
 }
 
 #playongoingdiv {
@@ -36,6 +41,7 @@ body {
 	align-items: center;
 	gap: 1em;
 	margin-bottom: 1.5em;
+	justify-content: space-around;
 }
 
 .vflexbox {
@@ -44,30 +50,11 @@ body {
 	align-items: center;
 	gap: 1em;
 	margin-bottom: 1.5em;
+	justify-content: space-around;
 }
 
-input,
-button {
-	width: 90%;
-	max-width: 500px;
-	padding: 0.8em;
-	font-size: 3rem;
-	border: 2px solid #00623e;
-	border-radius: 10px;
-	outline: none;
-	margin-bottom: 5px;
-}
 
-input::placeholder {
-	color: #999;
-}
 
-button {
-	background-color: #00623e;
-	color: white;
-	cursor: pointer;
-	transition: background-color 0.3s;
-}
 
 button:hover {
 	background-color: #004d2c;
@@ -80,36 +67,27 @@ input,
 button,
 summary,
 textinbox {
-	margin-bottom: 0.8em;
+	margin-bottom: 0em;
 	font-family: "VT323", serif;
 	overflow-wrap: anywhere;
 }
 
 h1,
 summary {
-	font-size: 5rem;
+	font-size: 2.5rem;
 	color: #00623e;
+	margin: 0;
 }
 
 h2 {
-	font-size: 3.2rem;
+	font-size: 1.6rem;
+	margin: 0;
 }
 
 p {
 	margin: 0;
-	font-size: 4.5rem;
+	font-size: 2.2rem;
 	color: #e28f00;
-}
-
-/* Results display */
-textinbox {
-	background-color: #ffda99;
-	padding: 0.5em;
-	border-radius: 5px;
-	margin-bottom: 0.5em;
-	border-radius: 10px;
-	font-size: 3.6rem;
-	color: #000000;
 }
 
 .partyongoingbody {
@@ -157,8 +135,80 @@ ul {
 	text-align: left;
 }
 
+.superlogocontainer {
+	width: 100%;
+	align-items:start;
+}
+
+superlogo {
+	left: 0px;
+	float: left;
+	font-family: 'Courier New', Courier, monospace;
+	text-align: left;
+	overflow-wrap: unset;
+	position: relative;
+	/* white-space: pre; */
+	white-space: pre-wrap;
+	width: 103ch;
+	font-size: 1.3rem;
+	font-weight: bolder;
+	animation: 11s linear 0s infinite running traintranslate;
+	padding-top: 10vw;
+	line-break: anywhere;
+	letter-spacing: 0px;
+}
+
+@keyframes traintranslate {
+	0% {
+		transform: translateX(0%);
+		left: 100vw;
+	}
+
+	100% {
+		transform: translateX(-100%);
+		left: 0vw;
+	}
+}
+
+input,
+button {
+	width: 90vw;
+	padding: 0;
+	font-size: 1.5rem;
+	border: 0;
+	border-radius: 10px;
+	outline: none;
+	/* margin-bottom: 5px; */
+	margin: 0.1em;
+	height: 2em;
+}
+
 input[type="checkbox"] {
 	border-radius: 10px;
-	transform: scale(5);
-	width: 100px;
+	width: 1em;
+}
+
+input::placeholder {
+	color: #999;
+}
+
+input {
+	background-color: #ffda99;
+}
+
+button {
+	background-color: #00623e;
+	color: white;
+	cursor: pointer;
+	transition: background-color 0.3s;
+}
+
+textinbox {
+	background-color: #76c969;
+	padding: 0.5em;
+	/* border-radius: 5px; */
+	/* margin-bottom: 0.5em; */
+	border-radius: 10px;
+	font-size: 1.8rem;
+	color: #000000;
 }
