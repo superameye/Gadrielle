@@ -94,7 +94,7 @@ p {
 }
 
 .partyongoingbody {
-	background-color: rffc663;
+	background-color: #e28f00;
 }
 
 .partyoverbody {
@@ -216,4 +216,6 @@ textinbox {
 	border-radius: 10px;
 	font-size: 1.8rem;
 	color: #000000;
+	margin-left: 1em;
+	margin-right: 1em;
 }
