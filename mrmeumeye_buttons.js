@@ -71,10 +71,5 @@ recoverbutton.addEventListener('click', function () {
 
 // Restart
 restartbutton.addEventListener('click', function () {
-	initcontainer.style.display = "block";
-	revelationcontainer.style.display = "none";
-	playcontainer.style.display = "none";
-	document.body.className = "partyresetbody";
-	resetParty();
+	refreshHome();
 })
-

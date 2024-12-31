@@ -193,6 +193,7 @@ function updateGame(killedPlayer = "none") {
 function showStartingPlayer() {
 	playerdiv.innerHTML = "";
 	let playerData = getData();
+	console.log()
 	for (playerData of playerData) {
 		if (playerData.isfirst == 1)
 			playerdiv.innerHTML = playerData.playername;
