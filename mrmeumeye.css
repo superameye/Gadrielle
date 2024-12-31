@@ -76,9 +76,10 @@ textinbox {
 
 h1,
 summary {
-	font-size: 2.5rem;
+	font-size: 2rem;
 	color: #00623e;
 	margin: 0;
+	font-family: "Caprasimo", serif;
 }
 
 h2 {
@@ -145,19 +146,21 @@ ul {
 superlogo {
 	left: 0px;
 	float: left;
-	font-family: 'Courier New', Courier, monospace;
+	/* font-family: 'Courier New', Courier, monospace; */
+	font-family: "VT323", serif;
 	text-align: left;
 	overflow-wrap: unset;
 	position: relative;
 	/* white-space: pre; */
 	white-space: pre-wrap;
 	width: 105ch;
-	font-size: 1.3rem;
+	font-size: 1.8rem;
 	font-weight: bolder;
-	animation: 6s linear 0s infinite running traintranslate;
+	animation: 8s linear 0s infinite running traintranslate;
 	padding-top: 10vw;
 	line-break: anywhere;
 	letter-spacing: 0px;
+	color: #004d2c;
 }
 
 @keyframes traintranslate {
