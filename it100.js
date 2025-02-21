@@ -71,7 +71,7 @@ const citations = [
 	"De la pire (1) à la meilleure (100) tendance de mode",
 	"Du pire (1) au meilleur (100) compagnon de voyage fictif",
 	"De la pire (1) à la meilleure (100) grimace",
-	"Du plus petit (1) au plus gros (100) moyen de transport"
+	"Du plus petit (1) au plus gros (100) moyen de transport",
 	"Du pire (1) au meilleur (100) déguisement pour une soirée",
 ];
 
